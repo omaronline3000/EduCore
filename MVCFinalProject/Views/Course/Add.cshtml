@@ -1,0 +1,28 @@
+﻿@model AddCoursesViewModel
+
+@{
+    ViewData["Title"] = "Adding Course";
+    SelectList departmetnsOptions = new SelectList(Model.departments,"Id","Name");
+    Layout = "_MyLayout";
+}
+
+<form asp-action="SaveAdd" asp-controller="Course" method="post">
+
+   <label asp-for="Name" class="form-label"></label>
+   <input asp-for="Name" class="form-control"/>
+    
+    <label asp-for="Degree" class="form-label"></label>
+    <input asp-for="Degree" class="form-control" />
+
+    <label asp-for="minDegree" class="form-label"></label>
+    <input asp-for="minDegree" class="form-control" />
+
+    <label asp-for="Hourse" class="form-label"></label>
+    <input asp-for="Hourse" class="form-control" />
+
+    <label asp-for="DeptId" class="form-label"></label>
+    <select class="form-select" asp-for="DeptId" asp-items="departmetnsOptions"> </select>
+    
+    <br /><br />
+    <input type="submit" class="btn btn-dark"/>
+</form>

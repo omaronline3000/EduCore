@@ -1,0 +1,23 @@
+﻿@model List<SearchDataViewModel>
+
+    <br />
+    <br />
+    <h1 style="color: blue;">Search Result</h1>
+
+<table class="table table-bordered table-hover">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Address</td>
+            <td>@item.Salary</td>
+            <td>@item.department</td>
+            <td>@item.course</td>
+            <td><a href="/instructor/details/@item.Id">Details</a></td>
+        </tr>
+    }
+</table>
+
+<a href="/Instructor/Index">Back to Full List</a>

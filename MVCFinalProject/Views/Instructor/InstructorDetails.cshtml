@@ -1,0 +1,17 @@
+﻿@model Instructor
+
+
+<table class="table table-bordered table-hover">
+
+  <tr>
+      <td>@Model.Id</td>
+        <td>@Model.Name</td>
+        <td>@Model.Address</td>
+        <td>@Model.Salary</td>
+        <td>@Model.department.Name</td>
+        <td>@Model.course.Name</td>
+</tr>
+
+</table>
+
+<a href="/Instructor/Index">Back to Full List</a>

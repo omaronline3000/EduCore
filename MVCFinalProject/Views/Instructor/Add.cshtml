@@ -1,0 +1,50 @@
+﻿@model AddingInstructorViewModel
+@{
+    Layout = "_MyLayout";
+}
+
+<form method="post" action="/Instructor/SaveAdd">
+
+    <label> Name </label>
+    <input name="name" id="name" type="text" value="@Model.Name"/>
+    <label> Salary </label>
+    <input name="salary" id="salary" type="number" value="@Model.salary"/>
+    <label> Address </label>
+    <input name="address" id="address" type="text" value="@Model.Address"/>
+
+    <label> Department </label>
+
+    <select name="DepartmentId">
+        @foreach(var item in Model.departments)
+            {
+                if (item.Id == Model.DepartmentId)
+                {
+                <option value="@item.Id" selected>@item.Name</option>
+                }
+                else {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+            
+    </select>
+
+    <label> Course </label>
+    
+    <select name="CourseId">
+        @foreach (var item in Model.courses)
+        {
+                if (item.Id == Model.CourseId)
+                {
+                <option value="@item.Id" selected>@item.Name</option>
+                }
+                else
+                {
+                <option value="@item.Id">@item.Name</option>
+                }
+
+        }
+    </select>
+
+    <input type="submit" value="Add Instructor"/>
+
+</form>
