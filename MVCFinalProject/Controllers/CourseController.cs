@@ -28,6 +28,11 @@ namespace MVCFinalProject.Controllers
         [HttpPost]
         public IActionResult SaveAdd(AddCoursesViewModel CourseFromReq)
         {
+            if (CourseFromReq.DeptId == -1)
+            {
+                ModelState.AddModelError("DeptId", "Yo Should Choose Department");
+            }
+
             if (!ModelState.IsValid)
             {
                 CourseFromReq.departments = new DepartmentService().GetAll();
@@ -36,7 +41,15 @@ namespace MVCFinalProject.Controllers
             new CourseService().AddCourse(CourseFromReq);
             return RedirectToAction("Index");
         }
-
+      //  [HttpPost]
+        public IActionResult ValidateDegree(int minDegree , int Degree)
+        {
+            if(Degree <= minDegree)
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
         [HttpGet]
         public IActionResult Delete(int id)
         {

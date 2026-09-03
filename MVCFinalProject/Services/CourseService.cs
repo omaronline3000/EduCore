@@ -46,8 +46,7 @@ namespace MVCFinalProject.Services
         public void RemoveCourse(int id)
         {
             var course = _context.courses.Find(id);
-            if (course is not null)
-                course.IsDeleted = true;
+            course?.IsDeleted = true;
             _context.SaveChanges();
 
         }

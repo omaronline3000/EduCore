@@ -3,26 +3,35 @@
 @{
     ViewData["Title"] = "Adding Course";
     SelectList departmetnsOptions = new SelectList(Model.departments,"Id","Name");
-    Layout = "_MyLayout";
 }
 
+<div asp-validation-summary="All" class="text-danger">
+
+</div>
 <form asp-action="SaveAdd" asp-controller="Course" method="post">
 
    <label asp-for="Name" class="form-label"></label>
    <input asp-for="Name" class="form-control"/>
-    
+   <span asp-validation-for="Name" class="text-danger"></span> 
+   <br />
     <label asp-for="Degree" class="form-label"></label>
     <input asp-for="Degree" class="form-control" />
-
+    <span asp-validation-for="Degree" class="text-danger"></span>
+    <br />
     <label asp-for="minDegree" class="form-label"></label>
     <input asp-for="minDegree" class="form-control" />
-
+    <span asp-validation-for="minDegree" class="text-danger"></span>
+    <br />
     <label asp-for="Hourse" class="form-label"></label>
     <input asp-for="Hourse" class="form-control" />
-
+    <span asp-validation-for="Hourse" class="text-danger"></span>
+    <br />
     <label asp-for="DeptId" class="form-label"></label>
-    <select class="form-select" asp-for="DeptId" asp-items="departmetnsOptions"> </select>
-    
+    <select class="form-select" asp-for="DeptId" asp-items="departmetnsOptions"> 
+        <option value="-1">--- Select Department ---</option>
+    </select>
+    <span asp-validation-for="DeptId" class="text-danger"></span>
+
     <br /><br />
     <input type="submit" class="btn btn-dark"/>
 </form>

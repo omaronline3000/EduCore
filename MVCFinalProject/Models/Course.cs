@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using MVCFinalProject.Models.CustomAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCFinalProject.Models
 {
@@ -6,9 +8,13 @@ namespace MVCFinalProject.Models
     {
         [Key]
         public int Id { get; set; }
+        
         public string Name { get; set; }
-        public int? Degree { get; set; }
+        
+        public int Degree { get; set; }
+        
         public int minDegree { get; set; }
+        
         public int Hourse { get; set; }
 
         public bool IsDeleted { get; set; }
