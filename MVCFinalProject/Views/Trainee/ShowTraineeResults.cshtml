@@ -1,0 +1,20 @@
+﻿@model TraineeCourseDegreeResultcsViewModel
+@{
+   // ViewData["Title"] = "Trainee Results";
+}
+
+<table class="table tab-content table-hover">
+    <thead>
+        <td>Name</td>
+        <td>Course</td>
+        <td>Degree</td>
+        <td>Trainee Status</td>
+    </thead>
+    <tr style="--bs-table-bg: @Model?.Color;">
+        <td>@Model?.TName</td>
+        <td>@Model?.CName</td>
+        <td>@Model?.Degree</td>
+        <td>@Model?.State</td>
+    </tr>
+</table>
+

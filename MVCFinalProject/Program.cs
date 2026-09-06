@@ -9,6 +9,8 @@ namespace MVCFinalProject
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -16,11 +18,14 @@ namespace MVCFinalProject
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession(); // TODO: Create Controller and test the session and cookie
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")

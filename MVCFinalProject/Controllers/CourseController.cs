@@ -42,6 +42,7 @@ namespace MVCFinalProject.Controllers
             return RedirectToAction("Index");
         }
       //  [HttpPost]
+      // Remote Validation
         public IActionResult ValidateDegree(int minDegree , int Degree)
         {
             if(Degree <= minDegree)
@@ -55,6 +56,11 @@ namespace MVCFinalProject.Controllers
         {
             new CourseService().RemoveCourse(id);
             return RedirectToAction("Index");
+        }
+        public IActionResult CouresResults(int id)
+        {
+            var data = new CourseService().CourseDegrees(id);
+            return View("CourseTraineeResults", data);
         }
 
     }

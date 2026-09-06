@@ -1,0 +1,29 @@
+﻿@model DisplayTraineeCoursesDegreeViewModel
+@{
+    ViewBag.Title = "Courses Results";
+}
+
+
+<h1 class="card-title">For Trainee: @Model.TraineeName</h1>
+
+<table class="table tab-content table-hover">
+    <thead>
+        <tr>
+            <th>Course Title</th>
+            <th>Degree</th>
+            <th>Trainee Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CourseData)
+        {
+            <tr>
+                <td style="background-color: @(item.State == "Successed" ? "Green" : "Red");">@item.Name</td>
+                <td style="background-color: @(item.State == "Successed" ? "Green" : "Red");">@item.Degree</td>
+                <td style="background-color: @(item.State == "Successed" ? "Green" : "Red");">@item.State</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+@* <a asp-action="" asp-controller="">Return To List</a> *@

@@ -38,6 +38,11 @@ namespace MVCFinalProject.Data
                 .HasForeignKey(c => c.deptId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<CrsResult>()
+                .HasOne(crs => crs.course)
+                .WithMany(c => c.crsResults)
+                .HasForeignKey(crs => crs.crsId);
+
             modelBuilder.Entity<Instructor>()
                 .HasQueryFilter(i => !i.IsDeleted);
             modelBuilder.Entity<Course>()

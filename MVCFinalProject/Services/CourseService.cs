@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using MVCFinalProject.Data;
 using MVCFinalProject.Models;
 using MVCFinalProject.ViewModels;
@@ -49,6 +50,30 @@ namespace MVCFinalProject.Services
             course?.IsDeleted = true;
             _context.SaveChanges();
 
+        }
+        public DisplayCourseWithItsTraineeResults? CourseDegrees(int crsId)
+        {
+            
+            var course = _context.courses.Find(crsId);
+            
+            if (course is null) 
+                return null;
+
+            var CourseResults = new DisplayCourseWithItsTraineeResults()
+            {
+                CourseTitle = course.Name,
+                TraineeData = _context.crsResults
+                    .Where(crs => crs.crsId == crsId)
+                    .Select(crs => new TraineeDataToDisplayInCourseResultViewModel()
+                    {
+                        Name = crs.trainee.Name,
+                        Degree = crs.Degree,
+                        Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red",
+                        State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
+                    }).ToList()
+            };
+            return CourseResults;
+         
         }
     }
 }

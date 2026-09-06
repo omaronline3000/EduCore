@@ -1,0 +1,29 @@
+﻿@model DisplayCourseWithItsTraineeResults
+
+@{
+    ViewBag.Title = "Trainee Results";
+}
+
+<h1 class="card-title">@Model.CourseTitle</h1>
+
+<table class="table tab-content table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Degree</th>
+            <th>Trainee Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TraineeData)
+        {
+            <tr>
+                <td style="background-color: @item.Color;">@item.Name</td>
+                <td style="background-color: @item.Color;">@item.Degree</td>
+                <td style="background-color: @item.Color;">@item.State</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<a asp-action="Index" asp-controller="Course">Return To List</a>
