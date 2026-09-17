@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace MVCFinalProject.Controllers
+﻿namespace MVCFinalProject.Controllers
 {
     public class SessionController : Controller
     {
+        private readonly APPDbContext context;
+        public SessionController(APPDbContext _context)
+        {
+            context = _context;
+        }
         public IActionResult SetSession(int id , string Name ,int age)
         {
             HttpContext.Session.SetString("id", Convert.ToString(id));

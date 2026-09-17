@@ -1,24 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MVCFinalProject.Data;
-using MVCFinalProject.Models;
-using MVCFinalProject.ViewModels;
-using MVCFinalProject.Services;
-
+﻿using MVCFinalProject.Repository;
 
 namespace MVCFinalProject.Controllers
 {
     public class InstructorController : Controller
     {
+        private readonly IInstructorRepository _instructorRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+        private readonly ICourseRepository _courseRepository;
+        public InstructorController(IInstructorRepository instructorRepository , IDepartmentRepository departmentRepository , ICourseRepository courseRepository) 
+        { 
+            _courseRepository = courseRepository;
+            _instructorRepository = instructorRepository;
+            _departmentRepository = departmentRepository;
+        
+        }
         public IActionResult Index()
         {
-            var instructors = new InstructorService().GetALl();
+            var instructors = _instructorRepository.GetAll();
             return View("ShowAll", instructors);
         }
         
         public IActionResult Details(int id)
         {
-            var instructor = new InstructorService().GetById(id);
+            var instructor = _instructorRepository.GetById(id);
             return View("InstructorDetails", instructor);
         }
 
@@ -26,8 +30,8 @@ namespace MVCFinalProject.Controllers
         public IActionResult Add()
         {
             AddingInstructorViewModel viewModel = new AddingInstructorViewModel();
-            viewModel.departments = new DepartmentService().GetAll();
-            viewModel.courses = new CourseService().GetAll();
+            viewModel.departments = _departmentRepository.GetAll();
+            viewModel.courses = _courseRepository.GetAll();
             return View("Add",viewModel);
         }
 
@@ -36,8 +40,8 @@ namespace MVCFinalProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                instructorFromRequest.departments = new DepartmentService().GetAll();
-                instructorFromRequest.courses = new CourseService().GetAll();
+                instructorFromRequest.departments = _departmentRepository.GetAll();
+                instructorFromRequest.courses = _courseRepository.GetAll();
                 return View("Add",instructorFromRequest);
             }
                 

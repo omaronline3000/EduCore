@@ -17,10 +17,6 @@ namespace MVCFinalProject.Services
                 .Load();
         }
 
-        public List<Course> GetAll()
-        {
-            return _context.courses.ToList();
-        }
        public List<Course> Pagination(int PageNumber)
         {
             const int pageSize = 2;
@@ -44,13 +40,6 @@ namespace MVCFinalProject.Services
             _context.SaveChanges();
         }
 
-        public void RemoveCourse(int id)
-        {
-            var course = _context.courses.Find(id);
-            course?.IsDeleted = true;
-            _context.SaveChanges();
-
-        }
         public DisplayCourseWithItsTraineeResults? CourseDegrees(int crsId)
         {
             

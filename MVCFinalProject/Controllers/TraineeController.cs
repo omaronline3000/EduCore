@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Routing.Tree;
-using MVCFinalProject.Services;
+﻿
+using MVCFinalProject.Repository;
 
 namespace MVCFinalProject.Controllers
-{
+{ 
     public class TraineeController : Controller
     {
+        private readonly ITraineeRepository _traineeRepository;
+        public TraineeController(ITraineeRepository traineeRepository)
+        {
+            _traineeRepository = traineeRepository;
+        }
         public IActionResult Index()
         {
             return View();

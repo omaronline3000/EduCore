@@ -12,10 +12,7 @@ namespace MVCFinalProject.Services
         {
             _context = new APPDbContext();
         }
-        //public void GetAll()
-        //{
 
-        //}
         public TraineeCourseDegreeResultcsViewModel? GetResult(int Tid , int Cid)
         {
             var crsResult = _context.crsResults.FirstOrDefault(crs => crs.traineeId == Tid && crs.crsId == Cid);

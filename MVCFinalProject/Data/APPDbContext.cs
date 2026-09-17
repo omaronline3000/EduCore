@@ -1,9 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MVCFinalProject.Models;
 namespace MVCFinalProject.Data
 {
-    public class APPDbContext : DbContext
+    public class APPDbContext : IdentityDbContext<ApplicationUser>
     {
+        public APPDbContext()
+        {
+
+        }
+        public APPDbContext(DbContextOptions options) : base(options)
+        {
+            
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,6 +53,12 @@ namespace MVCFinalProject.Data
                 .WithMany(c => c.crsResults)
                 .HasForeignKey(crs => crs.crsId);
 
+            modelBuilder.Entity<Trainee>()
+                .HasOne(t => t.department)
+                .WithMany(d => d.trainees)
+                .HasForeignKey(t => t.deptID);
+                
+
             modelBuilder.Entity<Instructor>()
                 .HasQueryFilter(i => !i.IsDeleted);
             modelBuilder.Entity<Course>()
@@ -53,6 +69,11 @@ namespace MVCFinalProject.Data
                 .HasQueryFilter(t => !t.IsDeleted);
             modelBuilder.Entity<CrsResult>()
                 .HasQueryFilter(cr => !cr.IsDeleted);
+
+            
+
+
+            base.OnModelCreating(modelBuilder);
 
         }
 

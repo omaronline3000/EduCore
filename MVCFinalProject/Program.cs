@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using MVCFinalProject.Repository;
+
 namespace MVCFinalProject
 {
     public class Program
@@ -11,6 +14,24 @@ namespace MVCFinalProject
 
             builder.Services.AddSession();
 
+            // Register built-in service
+            builder.Services.AddDbContext<APPDbContext>((optionsbuilder) =>
+            {
+                optionsbuilder.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+            });
+
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<APPDbContext>();
+ 
+
+            // Register custom service
+            builder.Services.AddScoped<IDepartmentRepository , DepartmentRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,6 +42,8 @@ namespace MVCFinalProject
             app.UseSession(); // TODO: Create Controller and test the session and cookie
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

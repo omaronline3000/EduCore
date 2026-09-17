@@ -4,6 +4,7 @@ using MVCFinalProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFinalProject.Migrations
 {
     [DbContext(typeof(APPDbContext))]
-    partial class APPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260910155053_ApplyingAuthentication")]
+    partial class ApplyingAuthentication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,12 +243,15 @@ namespace MVCFinalProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("departmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("deptID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("deptID");
+                    b.HasIndex("departmentId");
 
                     b.ToTable("trainees");
                 });
@@ -436,7 +442,7 @@ namespace MVCFinalProject.Migrations
                 {
                     b.HasOne("MVCFinalProject.Models.Department", "department")
                         .WithMany("trainees")
-                        .HasForeignKey("deptID")
+                        .HasForeignKey("departmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

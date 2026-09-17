@@ -18,15 +18,6 @@ namespace MVCFinalProject.Services
                 .Load();
         }
 
-        public List<Instructor> GetALl()
-        {
-            return _context.instructors.ToList();
-        }
-
-        public Instructor GetById(int id)
-        {
-            return _context.instructors.Find(id);
-        }
 
         public void AddInstructor(AddingInstructorViewModel instructorFromRequest)
         {

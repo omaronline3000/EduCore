@@ -6,14 +6,11 @@ namespace MVCFinalProject.Services
     public class DepartmentService
     {
         private readonly APPDbContext _context;
-        public DepartmentService()
+        public DepartmentService(APPDbContext context)
         {
-            _context = new APPDbContext();
+            _context = context;
         }
 
-        public List<Department> GetAll()
-        {
-            return _context.departments.ToList();
-        }
+
     }
 }

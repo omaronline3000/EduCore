@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using MVCFinalProject.Services;
-using MVCFinalProject.ViewModels;
+﻿using Microsoft.AspNetCore.Authorization;
+using MVCFinalProject.Repository;
 
 namespace MVCFinalProject.Controllers
 {
+    [Authorize]
+    [ValidateAntiForgeryToken]
     public class CourseController : Controller
     {
-
+        private readonly ICourseRepository _courseRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+        public CourseController(ICourseRepository courseRepository , IDepartmentRepository departmentRepository)
+        {
+            _courseRepository = courseRepository;
+            _departmentRepository = departmentRepository;
+        }
         [HttpGet]
         public IActionResult Index(int num)
         {
@@ -20,7 +26,7 @@ namespace MVCFinalProject.Controllers
         {
             AddCoursesViewModel CourseViewModel = new AddCoursesViewModel()
             {
-                departments = new DepartmentService().GetAll()
+                departments = _departmentRepository.GetAll()
             };
 
             return View("Add", CourseViewModel);
@@ -35,7 +41,7 @@ namespace MVCFinalProject.Controllers
 
             if (!ModelState.IsValid)
             {
-                CourseFromReq.departments = new DepartmentService().GetAll();
+                CourseFromReq.departments = _departmentRepository.GetAll();
                 return View("Add", CourseFromReq);
             }
             new CourseService().AddCourse(CourseFromReq);
@@ -54,7 +60,7 @@ namespace MVCFinalProject.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            new CourseService().RemoveCourse(id);
+            _courseRepository.Delete(id);
             return RedirectToAction("Index");
         }
         public IActionResult CouresResults(int id)

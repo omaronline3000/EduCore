@@ -1,0 +1,10 @@
+﻿global using MVCFinalProject.Controllers;
+global using MVCFinalProject.Data;
+global using MVCFinalProject.Models;
+global using MVCFinalProject.Services;
+global using MVCFinalProject.ViewModels;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
