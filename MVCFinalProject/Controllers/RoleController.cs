@@ -3,7 +3,7 @@
 namespace MVCFinalProject.Controllers
 {
     [Authorize(Roles = "Admin")]
-    [ValidateAntiForgeryToken]
+    
     public class RoleController : Controller
     {
         

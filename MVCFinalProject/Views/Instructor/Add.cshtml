@@ -1,7 +1,4 @@
 ﻿@model AddingInstructorViewModel
-@{
- 
-}
 
 <form method="post" action="/Instructor/SaveAdd">
 
@@ -14,7 +11,7 @@
 
     <label> Department </label>
 
-    <select name="DepartmentId">
+    <select name="DepartmentId" onchange="GetCourses()" id="Departments">
         @foreach(var item in Model.departments)
             {
                 if (item.Id == Model.DepartmentId)
@@ -30,21 +27,30 @@
 
     <label> Course </label>
     
-    <select name="CourseId">
-        @foreach (var item in Model.courses)
-        {
-                if (item.Id == Model.CourseId)
-                {
-                <option value="@item.Id" selected>@item.Name</option>
-                }
-                else
-                {
-                <option value="@item.Id">@item.Name</option>
-                }
-
-        }
-    </select>
+    <select name="CourseId" id="CourseId"> </select>
 
     <input type="submit" value="Add Instructor"/>
 
 </form>
+
+<script>
+    $(document).ready(function() {
+        GetCourses();
+    });
+
+    function GetCourses() {
+        const selectedDeptId = document.getElementById("Departments").value;
+        const courseDisplay = document.getElementById("CourseId");
+
+        courseDisplay.innerHTML = "";
+        $.ajax({
+            url: "/Course/GetCoursesByDept?deptId=" + selectedDeptId,
+            success: function(result) {
+                result.forEach(item => {
+                    courseDisplay.innerHTML +=
+                        `<option value="${item.id}">${item.name}</option>`;
+                });
+            }
+        });
+    }
+</script>

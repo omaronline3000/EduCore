@@ -5,7 +5,6 @@ using MVCFinalProject.ViewModels;
 using System.Security.Claims;
 namespace MVCFinalProject.Controllers
 {
-    [ValidateAntiForgeryToken]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

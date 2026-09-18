@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using MVCFinalProject.Data;
+using MVCFinalProject.DTO;
 using MVCFinalProject.Models;
+using MVCFinalProject.Repository;
 using MVCFinalProject.ViewModels;
 
 namespace MVCFinalProject.Services
 {
     public class CourseService
     {
+        private readonly ICourseRepository _courseRepository;
         private readonly APPDbContext _context;
-        public CourseService() { 
-            _context = new APPDbContext();
+        public CourseService(ICourseRepository courseRepository , APPDbContext context) {
+            _context = context;
+            _courseRepository = courseRepository;
             _context.courses
                 .Include(c => c.department)
                 .Include(c => c.instructors)
@@ -63,6 +67,18 @@ namespace MVCFinalProject.Services
             };
             return CourseResults;
          
+        }
+
+        public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId)
+        {
+            return _context.courses
+                .Where(c => c.deptId == deptId)
+                .Select(c => new CoursesDataByDepartmetnDTO
+                {
+                    Name = c.Name,
+                    Id = c.Id
+                })
+                .ToList();
         }
     }
 }

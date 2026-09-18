@@ -4,20 +4,21 @@ using MVCFinalProject.Repository;
 namespace MVCFinalProject.Controllers
 {
     [Authorize]
-    [ValidateAntiForgeryToken]
     public class CourseController : Controller
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IDepartmentRepository _departmentRepository;
-        public CourseController(ICourseRepository courseRepository , IDepartmentRepository departmentRepository)
+        private readonly CourseService _service;
+        public CourseController(ICourseRepository courseRepository , IDepartmentRepository departmentRepository , CourseService service)
         {
             _courseRepository = courseRepository;
             _departmentRepository = departmentRepository;
+            _service = service;
         }
         [HttpGet]
         public IActionResult Index(int num)
         {
-            var Courses = new CourseService().Pagination(num);
+            var Courses = _service.Pagination(num);
             ViewBag.Num = num;
             return View("ShowAllCourses", Courses);
         }
@@ -44,7 +45,7 @@ namespace MVCFinalProject.Controllers
                 CourseFromReq.departments = _departmentRepository.GetAll();
                 return View("Add", CourseFromReq);
             }
-            new CourseService().AddCourse(CourseFromReq);
+            _service.AddCourse(CourseFromReq);
             return RedirectToAction("Index");
         }
       //  [HttpPost]
@@ -65,8 +66,13 @@ namespace MVCFinalProject.Controllers
         }
         public IActionResult CouresResults(int id)
         {
-            var data = new CourseService().CourseDegrees(id);
+            var data = _service.CourseDegrees(id);
             return View("CourseTraineeResults", data);
+        }
+        public IActionResult GetCoursesByDept(int deptId)
+        {
+            var result = _service.GetCoursesByDeptId(deptId);
+            return Json(result);
         }
 
     }

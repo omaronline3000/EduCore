@@ -30,7 +30,7 @@ namespace MVCFinalProject
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
-
+            builder.Services.AddScoped<CourseService>();
 
             var app = builder.Build();
 
@@ -48,6 +48,9 @@ namespace MVCFinalProject
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            //app.MapControllerRoute("CoursesByDept", "/CourseByDept/{id:int}", 
+            //    new { controller = "Course", action = "GetCoursesByDept" });
 
             app.MapControllerRoute(
                 name: "default",

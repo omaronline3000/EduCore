@@ -2,7 +2,6 @@ using System.Diagnostics;
 
 namespace MVCFinalProject.Controllers
 {
-    [ValidateAntiForgeryToken]
     public class HomeController : Controller
     {
         public IActionResult Index()
