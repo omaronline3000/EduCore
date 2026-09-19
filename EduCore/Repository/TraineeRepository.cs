@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Repository
+﻿namespace EduCore.Repository
 {
     public class TraineeRepository : ITraineeRepository
     {
@@ -27,11 +27,23 @@
         {
             _context.trainees.Update(tar);
         }
-        public void Delete(Trainee tar)
+        public void Delete(int id)
         {
-            var Trainee = _context.courses.Find(tar.Id);
+            var Trainee = _context.trainees.Find(id);
             if (Trainee is not null) Trainee.IsDeleted = true;
         }
+
+
+        public bool Exist(int id)
+        {
+            return _context.trainees.Any(c => c.Id == id);
+        }
+
+        public bool Exist()
+        {
+            return _context.trainees.Any();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

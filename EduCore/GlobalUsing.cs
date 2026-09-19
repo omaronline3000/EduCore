@@ -1,8 +1,8 @@
-﻿global using MVCFinalProject.Controllers;
-global using MVCFinalProject.Data;
-global using MVCFinalProject.Models;
-global using MVCFinalProject.Services;
-global using MVCFinalProject.ViewModels;
+﻿global using EduCore.Controllers;
+global using EduCore.Data;
+global using EduCore.Models;
+global using EduCore.Services;
+global using EduCore.ViewModels;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authentication;

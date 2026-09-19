@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.ViewModels
+﻿namespace EduCore.ViewModels
 {
     public class TraineeCourseDegreeResultcsViewModel
     {

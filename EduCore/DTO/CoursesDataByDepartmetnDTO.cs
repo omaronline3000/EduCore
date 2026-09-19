@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.DTO
+﻿namespace EduCore.DTO
 {
     public class CoursesDataByDepartmetnDTO
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace MVCFinalProject.Models
+namespace EduCore.Models
 {
     public class ApplicationUser : IdentityUser
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVCFinalProject.Models.CustomAttributes;
+using EduCore.Models.CustomAttributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVCFinalProject.Models
+namespace EduCore.Models
 {
     public class Course
     {

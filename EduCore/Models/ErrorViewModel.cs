@@ -1,4 +1,4 @@
-namespace MVCFinalProject.Models
+namespace EduCore.Models
 {
     public class ErrorViewModel
     {

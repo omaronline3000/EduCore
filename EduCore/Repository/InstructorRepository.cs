@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Repository
+﻿namespace EduCore.Repository
 {
     public class InstructorRepository : IInstructorRepository
     {
@@ -16,12 +16,36 @@
 
         public List<Instructor>? GetAll()
         {
-            return _context.instructors.ToList();
+            return _context.instructors
+                .ToList();
         }
         public Instructor? GetById(int id)
         {
-            return _context.instructors.Find(id);
+            return _context.instructors
+                .Include(i => i.course)
+                .Include(i => i.department)
+                .FirstOrDefault(i => i.Id == id);
         }
+
+        public List<SearchDataViewModel> GetInstructorsByName(string name)
+        {
+            var instructorsResults = _context.instructors
+                .Where(i => i.Name.Replace(" ", "").ToLower() == name)
+                .Select(
+                (i) => new SearchDataViewModel
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Address = i.Address,
+                    Salary = i.Salary,
+                    department = i.department.Name,
+                    course = i.course.Name
+                })
+                .ToList();
+
+            return instructorsResults;
+        }
+
 
         public void Update(Instructor ins)
         {
@@ -29,9 +53,20 @@
         }
         public void Delete(int id)
         {
-            var instructor = _context.courses.Find(id);
+            var instructor = _context.instructors.Find(id);
             if (instructor is not null) instructor.IsDeleted = true;
         }
+
+        public bool Exist(int id)
+        {
+            return _context.instructors.Any(c => c.Id == id);
+        }
+
+        public bool Exist()
+        {
+            return _context.instructors.Any();
+        }
+
         public void Save()
         {
             _context.SaveChanges();

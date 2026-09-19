@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Repository
+﻿namespace EduCore.Repository
 {
     public class DepartmentRepository : IDepartmentRepository
     {
@@ -29,8 +29,18 @@
         }
         public void Delete(int id)
         {
-            var department = _context.courses.Find(id);
+            var department = _context.departments.Find(id);
             if (department is not null) department.IsDeleted = true;
+        }
+
+
+        public bool Exist(int id)
+        {
+            return _context.departments.Any(c => c.Id == id);
+        }
+        public bool Exist()
+        {
+            return _context.departments.Any();
         }
         public void Save()
         {

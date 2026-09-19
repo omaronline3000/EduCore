@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Data
+﻿namespace EduCore.Data
 {
     public class Connections
     {

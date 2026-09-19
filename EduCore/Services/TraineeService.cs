@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MVCFinalProject.Data;
-using MVCFinalProject.Models;
-using MVCFinalProject.ViewModels;
+using EduCore.Data;
+using EduCore.Models;
+using EduCore.ViewModels;
 
-namespace MVCFinalProject.Services
+namespace EduCore.Services
 {
     public class TraineeService
     {

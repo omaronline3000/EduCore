@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 {
     [Authorize(Roles = "Admin")]
     

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MVCFinalProject.Models;
-namespace MVCFinalProject.Data
+using EduCore.Models;
+namespace EduCore.Data
 {
     public class APPDbContext : IdentityDbContext<ApplicationUser>
     {

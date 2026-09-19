@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MVCFinalProject.Migrations
+namespace EduCore.Migrations
 {
     /// <inheritdoc />
     public partial class ApplyingAuthentication : Migration

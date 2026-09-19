@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Repository
+﻿namespace EduCore.Repository
 {
     public interface ITraineeRepository
     {
@@ -9,7 +9,10 @@
         Trainee? GetById(int id);
 
         void Update(Trainee tra);
-        void Delete(Trainee tra);
+        void Delete(int id);
         void Save();
+
+        public bool Exist(int id);
+        public bool Exist();
     }
 }

@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,7 @@
-﻿using System.Data;
+﻿using EduCore.DTO;
+using System.Data;
 
-namespace MVCFinalProject.Repository
+namespace EduCore.Repository
 {
     public class CourseRepository : ICourseRepository
     {
@@ -16,10 +17,20 @@ namespace MVCFinalProject.Repository
             _context.courses.Add(crs);
         }
 
-        public List<Course>? GetAll()
+        public List<Course> GetAll()
         {
             return _context.courses.ToList();
         }
+
+        public List<Course> GetPage(int pageNumber, int pageSize)
+        {
+            return _context.courses
+                .Include(c => c.instructors)
+                .Skip(pageSize * pageNumber)
+                .Take(pageSize)
+                .ToList();
+        }
+
         public Course? GetById(int id)
         {
             return _context.courses.Find(id);
@@ -34,6 +45,48 @@ namespace MVCFinalProject.Repository
             var course = _context.courses.Find(id);
             if (course is not null) course.IsDeleted = true;
         }
+
+        public bool Exist(int id)
+        {
+            return _context.courses.Any(c => c.Id == id);
+        }
+        public bool Exist()
+        {
+            return _context.courses.Any();
+        }
+
+        public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course)
+        {
+            var CourseResults = new DisplayCourseWithItsTraineeResults()
+            {
+                CourseTitle = course.Name,
+                TraineeData = _context.crsResults
+                    .Where(crs => crs.crsId == course.Id)
+                    .Select(crs => new TraineeDataToDisplayInCourseResultViewModel()
+                    {
+                        Name = crs.trainee.Name,
+                        Degree = crs.Degree,
+                        Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red",
+                        State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
+                    }).ToList()
+            };
+            return CourseResults;
+        }
+
+
+        public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId)
+        {
+
+            return _context.courses
+                    .Where(c => c.deptId == deptId)
+                    .Select(c => new CoursesDataByDepartmetnDTO
+                        {
+                            Name = c.Name,
+                            Id = c.Id
+                        })
+                    .ToList();
+         }
+
         public void Save()
         {
             _context.SaveChanges();

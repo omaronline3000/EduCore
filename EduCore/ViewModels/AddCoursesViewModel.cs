@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVCFinalProject.Controllers;
-using MVCFinalProject.Models;
-using MVCFinalProject.Models.CustomAttributes;
+using EduCore.Controllers;
+using EduCore.Models;
+using EduCore.Models.CustomAttributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVCFinalProject.ViewModels
+namespace EduCore.ViewModels
 {
     public class AddCoursesViewModel
     {

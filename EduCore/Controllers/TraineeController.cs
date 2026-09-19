@@ -1,7 +1,7 @@
 ﻿
-using MVCFinalProject.Repository;
+using EduCore.Repository;
 
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 { 
     public class TraineeController : Controller
     {

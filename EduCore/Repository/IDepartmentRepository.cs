@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Repository
+﻿namespace EduCore.Repository
 {
     public interface IDepartmentRepository
     {
@@ -11,5 +11,8 @@
         void Update(Department dep);
         void Delete(int id);
         void Save();
+
+        public bool Exist(int id);
+        public bool Exist();
     }
 }

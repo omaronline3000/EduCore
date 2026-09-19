@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVCFinalProject.Data;
+using EduCore.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVCFinalProject.Models.CustomAttributes
+namespace EduCore.Models.CustomAttributes
 {
     public class UniqueAttribute : ValidationAttribute
     {

@@ -1,24 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using MVCFinalProject.Repository;
+using EduCore.Repository;
 
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 {
     [Authorize]
     public class CourseController : Controller
     {
-        private readonly ICourseRepository _courseRepository;
-        private readonly IDepartmentRepository _departmentRepository;
-        private readonly CourseService _service;
-        public CourseController(ICourseRepository courseRepository , IDepartmentRepository departmentRepository , CourseService service)
+        private readonly CourseService _courseService;
+        private readonly DepartmentService _departmentService;
+        public CourseController(CourseService courseService , DepartmentService departmentService)
         {
-            _courseRepository = courseRepository;
-            _departmentRepository = departmentRepository;
-            _service = service;
+            _courseService = courseService;
+            _departmentService = departmentService;
         }
+
         [HttpGet]
-        public IActionResult Index(int num)
+        public IActionResult Index(int num=0)
         {
-            var Courses = _service.Pagination(num);
+            var Courses = _courseService.Pagination(num);
             ViewBag.Num = num;
             return View("ShowAllCourses", Courses);
         }
@@ -27,7 +26,7 @@ namespace MVCFinalProject.Controllers
         {
             AddCoursesViewModel CourseViewModel = new AddCoursesViewModel()
             {
-                departments = _departmentRepository.GetAll()
+                departments = _departmentService.GetAll()
             };
 
             return View("Add", CourseViewModel);
@@ -42,38 +41,40 @@ namespace MVCFinalProject.Controllers
 
             if (!ModelState.IsValid)
             {
-                CourseFromReq.departments = _departmentRepository.GetAll();
+                CourseFromReq.departments = _departmentService.GetAll();
                 return View("Add", CourseFromReq);
             }
-            _service.AddCourse(CourseFromReq);
+            _courseService.AddCourse(CourseFromReq);
             return RedirectToAction("Index");
         }
-      //  [HttpPost]
-      // Remote Validation
-        public IActionResult ValidateDegree(int minDegree , int Degree)
+
+        [HttpGet]
+        public IActionResult Delete(int id)
         {
-            if(Degree <= minDegree)
+            _courseService.DeleteCourse(id);
+            return RedirectToAction("Index");
+        }
+
+
+        public IActionResult CouresResults(int id)
+        {
+            var data = _courseService.CourseTraineesDegreesById(id);
+            return View("CourseTraineeResults", data);
+        }
+        public IActionResult GetCoursesByDept(int deptId)
+        {
+            var result = _courseService.CoursesByDeptId(deptId);
+            return Json(result);
+        }
+
+        // Remote Validation
+        public IActionResult ValidateDegree(int minDegree, int Degree)
+        {
+            if (Degree <= minDegree)
             {
                 return Json(false);
             }
             return Json(true);
         }
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            _courseRepository.Delete(id);
-            return RedirectToAction("Index");
-        }
-        public IActionResult CouresResults(int id)
-        {
-            var data = _service.CourseDegrees(id);
-            return View("CourseTraineeResults", data);
-        }
-        public IActionResult GetCoursesByDept(int deptId)
-        {
-            var result = _service.GetCoursesByDeptId(deptId);
-            return Json(result);
-        }
-
     }
 }

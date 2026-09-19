@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MVCFinalProject.ViewModels;
+using EduCore.ViewModels;
 using System.Security.Claims;
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 {
     public class AccountController : Controller
     {

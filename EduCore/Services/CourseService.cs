@@ -1,35 +1,44 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using MVCFinalProject.Data;
-using MVCFinalProject.DTO;
-using MVCFinalProject.Models;
-using MVCFinalProject.Repository;
-using MVCFinalProject.ViewModels;
+using EduCore.Data;
+using EduCore.DTO;
+using EduCore.Models;
+using EduCore.Repository;
+using EduCore.ViewModels;
+using System.ComponentModel.Design;
 
-namespace MVCFinalProject.Services
+namespace EduCore.Services
 {
     public class CourseService
     {
         private readonly ICourseRepository _courseRepository;
-        private readonly APPDbContext _context;
-        public CourseService(ICourseRepository courseRepository , APPDbContext context) {
-            _context = context;
+        private readonly DepartmentService _departmentService;
+
+
+        public CourseService(ICourseRepository courseRepository , DepartmentService departmentService) {
             _courseRepository = courseRepository;
-            _context.courses
-                .Include(c => c.department)
-                .Include(c => c.instructors)
-                .Load();
+            _departmentService = departmentService;
+            //_context.courses
+            //    .Include(c => c.department)
+            //    .Include(c => c.instructors)
+            //    .Load();
         }
 
-       public List<Course> Pagination(int PageNumber)
+        public List<Course>? GetAll()
+        {
+            if (_courseRepository.Exist())
+                return _courseRepository.GetAll();
+            else return null;
+        }
+
+       public List<Course>? Pagination(int PageNumber)
         {
             const int pageSize = 2;
+            if (_courseRepository.Exist())
+                return _courseRepository.GetPage(PageNumber, pageSize);
+            else return null;
+        }
 
-            return _context.courses
-                .Skip(pageSize * PageNumber)
-                .Take(pageSize)
-                .ToList();
-        } 
         public void AddCourse(AddCoursesViewModel CourseFromReq)
         {
             var course = new Course()
@@ -40,45 +49,42 @@ namespace MVCFinalProject.Services
                 Hourse = CourseFromReq.Hourse,
                 deptId = CourseFromReq.DeptId
             };
-            _context.courses.Add(course);
-            _context.SaveChanges();
+           _courseRepository.Add(course);
+            _courseRepository.Save();
         }
 
-        public DisplayCourseWithItsTraineeResults? CourseDegrees(int crsId)
+        public void DeleteCourse(int id)
+        {
+            if (Exist(id))
+                _courseRepository.Delete(id);
+                    
+        }
+
+        public bool Exist(int id)
+        {
+            return _courseRepository.Exist(id);
+        }
+        public bool Exist()
+        {
+            return _courseRepository.Exist();
+        }
+
+        public DisplayCourseWithItsTraineeResults? CourseTraineesDegreesById(int crsId)
         {
             
-            var course = _context.courses.Find(crsId);
+            var course = _courseRepository.GetById(crsId);
             
             if (course is null) 
                 return null;
-
-            var CourseResults = new DisplayCourseWithItsTraineeResults()
-            {
-                CourseTitle = course.Name,
-                TraineeData = _context.crsResults
-                    .Where(crs => crs.crsId == crsId)
-                    .Select(crs => new TraineeDataToDisplayInCourseResultViewModel()
-                    {
-                        Name = crs.trainee.Name,
-                        Degree = crs.Degree,
-                        Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red",
-                        State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
-                    }).ToList()
-            };
-            return CourseResults;
+            return _courseRepository.GetCourseWithTraineeResults(course);
          
         }
 
-        public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId)
+        public List<CoursesDataByDepartmetnDTO>? CoursesByDeptId(int deptId)
         {
-            return _context.courses
-                .Where(c => c.deptId == deptId)
-                .Select(c => new CoursesDataByDepartmetnDTO
-                {
-                    Name = c.Name,
-                    Id = c.Id
-                })
-                .ToList();
+            if (_departmentService.Exist(deptId))
+                return _courseRepository.GetCoursesByDeptId(deptId);
+            else return null;
         }
     }
 }

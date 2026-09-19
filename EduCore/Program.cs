@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using MVCFinalProject.Repository;
+using EduCore.Repository;
 
-namespace MVCFinalProject
+namespace EduCore
 {
     public class Program
     {
@@ -31,7 +31,9 @@ namespace MVCFinalProject
             builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
             builder.Services.AddScoped<CourseService>();
-
+            builder.Services.AddScoped<DepartmentService>();
+            builder.Services.AddScoped<InstructorService>();
+            builder.Services.AddScoped<TraineeService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

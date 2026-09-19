@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVCFinalProject.ViewModels
+namespace EduCore.ViewModels
 {
     public class AddRoleViewModel
     {

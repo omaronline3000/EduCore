@@ -1,6 +1,6 @@
-﻿using MVCFinalProject.Models;
+﻿using EduCore.Models;
 
-namespace MVCFinalProject.ViewModels
+namespace EduCore.ViewModels
 {
     public class SearchDataViewModel
     {

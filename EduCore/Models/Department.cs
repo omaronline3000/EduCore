@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVCFinalProject.Models
+namespace EduCore.Models
 {
     public class Department
     {

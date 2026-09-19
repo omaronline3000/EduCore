@@ -1,28 +1,28 @@
-﻿using MVCFinalProject.Repository;
+﻿using EduCore.Repository;
 
-namespace MVCFinalProject.Controllers
+namespace EduCore.Controllers
 {
     public class InstructorController : Controller
     {
-        private readonly IInstructorRepository _instructorRepository;
-        private readonly IDepartmentRepository _departmentRepository;
-        private readonly ICourseRepository _courseRepository;
-        public InstructorController(IInstructorRepository instructorRepository , IDepartmentRepository departmentRepository , ICourseRepository courseRepository) 
-        { 
-            _courseRepository = courseRepository;
-            _instructorRepository = instructorRepository;
-            _departmentRepository = departmentRepository;
+        private readonly InstructorService _instructorService;
+        private readonly CourseService _courseService;
+        private readonly DepartmentService _departmentService;
+        public InstructorController(InstructorService instructorService, DepartmentService departmentService , CourseService courseService) 
+        {
+            _instructorService = instructorService;
+            _courseService = courseService;
+            _departmentService = departmentService;
         
         }
         public IActionResult Index()
         {
-            var instructors = _instructorRepository.GetAll();
+            var instructors = _instructorService.GetAll();
             return View("ShowAll", instructors);
         }
         
         public IActionResult Details(int id)
         {
-            var instructor = _instructorRepository.GetById(id);
+            var instructor = _instructorService.GetById(id);
             return View("InstructorDetails", instructor);
         }
 
@@ -30,8 +30,8 @@ namespace MVCFinalProject.Controllers
         public IActionResult Add()
         {
             AddingInstructorViewModel viewModel = new AddingInstructorViewModel();
-            viewModel.departments = _departmentRepository.GetAll();
-            viewModel.courses = _courseRepository.GetAll();
+            viewModel.departments = _departmentService.GetAll();
+            viewModel.courses = _courseService.GetAll();
             return View("Add",viewModel);
         }
 
@@ -40,13 +40,12 @@ namespace MVCFinalProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                instructorFromRequest.departments = _departmentRepository.GetAll();
-                instructorFromRequest.courses = _courseRepository.GetAll();
+                instructorFromRequest.departments = _departmentService.GetAll();
+                instructorFromRequest.courses = _courseService.GetAll();
                 return View("Add",instructorFromRequest);
             }
                 
-
-            new InstructorService().AddInstructor(instructorFromRequest);
+            _instructorService.AddInstructor(instructorFromRequest);
             return RedirectToAction("Index");
         }
         
@@ -54,7 +53,7 @@ namespace MVCFinalProject.Controllers
         // TODO: edit to make it search by id not name
         public IActionResult Search(string search)
         {
-            var result = new InstructorService().SearchByName(search);
+            var result = _instructorService.SearchByName(search);
             if(result.Count < 1)
             {
                 return Content("There is not instructor with this name");

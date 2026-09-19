@@ -1,4 +1,4 @@
-﻿namespace MVCFinalProject.Controllers
+﻿namespace EduCore.Controllers
 {
     public class SessionController : Controller
     {
