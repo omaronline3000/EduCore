@@ -30,10 +30,13 @@ namespace EduCore
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+            builder.Services.AddScoped<ICourseTraineeResultsRepository , CourseTraineeResultsRepository>();
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<DepartmentService>();
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<TraineeService>();
+            builder.Services.AddScoped<CourseTraineeResultsService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

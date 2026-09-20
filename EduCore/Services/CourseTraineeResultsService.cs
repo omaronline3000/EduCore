@@ -5,9 +5,13 @@ namespace EduCore.Services
     public class CourseTraineeResultsService
     {
         private readonly ICourseTraineeResultsRepository _courseTraineeResultsRepository;
-        public CourseTraineeResultsService(ICourseTraineeResultsRepository courseTraineeResultsRepository)
+        private readonly ICourseRepository _courseRepository;
+        private readonly ITraineeRepository _traineeRepository;
+        public CourseTraineeResultsService(ICourseTraineeResultsRepository courseTraineeResultsRepository , ICourseRepository courseRepository , ITraineeRepository traineeRepository)
         {
             _courseTraineeResultsRepository = courseTraineeResultsRepository;
+            _courseRepository = courseRepository;
+            _traineeRepository = traineeRepository;
         }
         public List<CrsResult>? GetAll()
         {
@@ -17,13 +21,26 @@ namespace EduCore.Services
         {
             return _courseTraineeResultsRepository.GetById(id);
         }
-        public CrsResult? GetResultByTidAndCid(int Tid, int Cid)
+        public TraineeCourseDegreeResultcsViewModel? GetResultByTidAndCid(int Tid, int Cid)
         {
-            return _courseTraineeResultsRepository.GetResultByTidAndCid(Tid, Cid);
+            CrsResult? result = _courseTraineeResultsRepository.GetResultByTidAndCid(Tid, Cid);
+            return new TraineeCourseDegreeResultcsViewModel()
+            {
+                TName = result?.trainee.Name,
+                CName = result?.course.Name,
+                Degree = result?.Degree,
+                State = result?.Degree >= result?.course.minDegree ? "Successed" : "Failed",
+                Color = result?.Degree >= result?.course.minDegree ? "Green" : "Red"
+            };
         }
-        public List<CourseDataToDisplayTraineeResultsViewModel>? GetResultsByTid(int Tid)
+        public DisplayTraineeCoursesDegreeViewModel? GetResultsByTid(int Tid)
         {
-            return _courseTraineeResultsRepository.GetResultsByTid(Tid);
+            string? Name = _traineeRepository.GetById(Tid)?.Name;
+            return new DisplayTraineeCoursesDegreeViewModel()
+            {
+                TraineeName = Name,
+                CourseData = _courseTraineeResultsRepository.GetResultsByTid(Tid)
+            };
         }
         public void AddResult(/* */)
         {
