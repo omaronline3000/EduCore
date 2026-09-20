@@ -18,10 +18,6 @@ namespace EduCore.Services
         public CourseService(ICourseRepository courseRepository , DepartmentService departmentService) {
             _courseRepository = courseRepository;
             _departmentService = departmentService;
-            //_context.courses
-            //    .Include(c => c.department)
-            //    .Include(c => c.instructors)
-            //    .Load();
         }
 
         public List<Course>? GetAll()
@@ -39,6 +35,12 @@ namespace EduCore.Services
             else return null;
         }
 
+        public Course? GetCourseById(int id)
+        {
+            return _courseRepository.GetById(id);
+        }
+
+
         public void AddCourse(AddCoursesViewModel CourseFromReq)
         {
             var course = new Course()
@@ -53,6 +55,10 @@ namespace EduCore.Services
             _courseRepository.Save();
         }
 
+        public void UpdateCourse(Course crs)
+        {
+            _courseRepository.Update(crs);
+        }
         public void DeleteCourse(int id)
         {
             if (Exist(id))
@@ -85,6 +91,10 @@ namespace EduCore.Services
             if (_departmentService.Exist(deptId))
                 return _courseRepository.GetCoursesByDeptId(deptId);
             else return null;
+        }
+        public void Save()
+        {
+            _courseRepository.Save();
         }
     }
 }

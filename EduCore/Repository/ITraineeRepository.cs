@@ -16,8 +16,6 @@
         public bool Exist();
 
         // Main Features
-        public CrsResult? GetResult(int Tid, int Cid);
-        public List<CourseDataToDisplayTraineeResultsViewModel>? getAllResults(int Tid);
 
     }
 }

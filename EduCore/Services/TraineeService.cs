@@ -14,33 +14,44 @@ namespace EduCore.Services
             _traineeRepository = traineeRepository;
         }
 
-        public TraineeCourseDegreeResultcsViewModel? GetResult(int Tid , int Cid)
-        {
-            var crsResult = _traineeRepository.GetResult(Tid, Cid);
-            if (crsResult is null) return null;
-            else 
-                return new TraineeCourseDegreeResultcsViewModel()
-            {
-                TName = crsResult.trainee.Name,
-                CName = crsResult.course.Name,
-                Degree = crsResult.Degree,
-                Color = crsResult.Degree >= crsResult.course.minDegree ? "Green" : "Red",
-                State = crsResult.Degree >= crsResult.course.minDegree ? "Successed" : "Failed"
-            };
 
+        public void AddTrainee(Trainee tra)
+        {
+
+            _traineeRepository.Add(tra);
         }
-        public DisplayTraineeCoursesDegreeViewModel? getAllResults(int Tid)
+
+        public List<Trainee>? GetAll()
         {
-            var trainee = _traineeRepository.GetById(Tid);
-            if (trainee is null)
-                return null;
+            return _traineeRepository.GetAll();
+        }
+        public Trainee? GetById(int id)
+        {
+            return _traineeRepository.GetById(id);
+        }
 
-            var CourseResults = new DisplayTraineeCoursesDegreeViewModel();
-            CourseResults.TraineeName = trainee.Name;
+        public void UpdateTrainee(Trainee tar)
+        {
+            _traineeRepository.Update(tar);
+        }
+        public void DeleteTrainee(int id)
+        {
+            _traineeRepository.Delete(id);
+        }
 
-            CourseResults.CourseData = _traineeRepository.getAllResults(Tid);
 
-            return CourseResults;
+        public bool Exist(int id)
+        {
+            return _traineeRepository.Exist(id);
+        }
+
+        public bool Exist()
+        {
+            return _traineeRepository.Exist();
+        }
+        public void Save()
+        {
+            _traineeRepository.Save();
         }
     }
 }

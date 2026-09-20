@@ -45,26 +45,6 @@
         }
 
 
-        public CrsResult? GetResult(int Tid, int Cid)
-        {
-            return _context.crsResults
-                .Include(cr => cr.trainee)
-                .Include(cr => cr.course)
-                .FirstOrDefault(crs => crs.traineeId == Tid && crs.crsId == Cid);
-        }
-        public List<CourseDataToDisplayTraineeResultsViewModel>? getAllResults(int Tid)
-        {
-            return _context.crsResults
-                .Where(crs => crs.traineeId == Tid)
-                .Select(crs =>
-                new CourseDataToDisplayTraineeResultsViewModel()
-                {
-                    Name = crs.course.Name,
-                    Degree = crs.Degree,
-                    State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
-                }).ToList();
-        }
-
         public void Save()
         {
             _context.SaveChanges();

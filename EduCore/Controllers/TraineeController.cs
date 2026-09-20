@@ -6,9 +6,11 @@ namespace EduCore.Controllers
     public class TraineeController : Controller
     {
         private readonly TraineeService _trineeService;
-        public TraineeController(TraineeService traineeService)
+        private readonly CourseTraineeResultsService _courseTraineeResultsService;
+        public TraineeController(TraineeService traineeService , CourseTraineeResultsService courseTraineeResultsService)
         {
             _trineeService = traineeService;
+            _courseTraineeResultsService = courseTraineeResultsService;
         }
         public IActionResult Index()
         {
@@ -16,13 +18,13 @@ namespace EduCore.Controllers
         }
         public IActionResult ShowResult(int id, int CrsId)
         {
-            var result = _trineeService.GetResult(id, CrsId);
+            var result = _courseTraineeResultsService.GetResultByTidAndCid(id, CrsId);
             return View("ShowTraineeResults", result);
         }
 
         public IActionResult AllResults(int id)
         {
-            var results = _trineeService.getAllResults(id);
+            var results = _courseTraineeResultsService.GetResultsByTid(id);
             return View("ShowResults", results);
         }
     }
