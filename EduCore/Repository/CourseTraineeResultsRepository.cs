@@ -1,4 +1,6 @@
-﻿namespace EduCore.Repository
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace EduCore.Repository
 {
     public class CourseTraineeResultsRepository : ICourseTraineeResultsRepository
     {
@@ -41,7 +43,19 @@
                     State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
                 }).ToList();
         }
-
+        public List<TraineeDataForCourseViewModel>? GetResultsByCid(int Cid)
+        {
+            return _context.crsResults
+                .Where(crs => crs.crsId == Cid)
+                .Select(crs => 
+                new TraineeDataForCourseViewModel()
+                {
+                    Name = crs.trainee.Name,
+                    Degree = crs.Degree,
+                    State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed",
+                    Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red"
+                }).ToList();
+        }
         public void AddResult(CrsResult crsResult)
         {
             _context.crsResults.Add(crsResult);

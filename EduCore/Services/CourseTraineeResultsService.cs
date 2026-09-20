@@ -42,19 +42,33 @@ namespace EduCore.Services
                 CourseData = _courseTraineeResultsRepository.GetResultsByTid(Tid)
             };
         }
-        public void AddResult(/* */)
+        public DisplayCourseWithTraineeDataViewModel? GetResultsByCid(int Cid)
+        {
+            string? Name = _courseRepository.GetById(Cid)?.Name;
+            return new DisplayCourseWithTraineeDataViewModel()
+            {
+                CourseTitle = Name,
+                TraineeData = _courseTraineeResultsRepository.GetResultsByCid(Cid)
+            };
+        }
+        public void AddResult(AddResultViewModel result)
         {
             CrsResult crsResult = new()
             {
-
+                Degree = result.Degree,
+                traineeId = result.traineeId,
+                crsId = result.crsId
             };
             _courseTraineeResultsRepository.AddResult(crsResult);
         }
-        public void UpdateResult(/* */)
+        public void UpdateResult(AddResultViewModel result , int id)
         {
             CrsResult crsResult = new()
             {
-
+                Id = id,
+                Degree = result.Degree,
+                traineeId = result.traineeId,
+                crsId = result.crsId
             };
             _courseTraineeResultsRepository.UpdateResult(crsResult);
         }

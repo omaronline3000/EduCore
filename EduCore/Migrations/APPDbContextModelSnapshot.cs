@@ -121,7 +121,7 @@ namespace EduCore.Migrations
 
                     b.HasIndex("deptId");
 
-                    b.ToTable("courses");
+                    b.ToTable("courses", (string)null);
                 });
 
             modelBuilder.Entity("EduCore.Models.CrsResult", b =>
@@ -150,7 +150,7 @@ namespace EduCore.Migrations
 
                     b.HasIndex("traineeId");
 
-                    b.ToTable("crsResults");
+                    b.ToTable("crsResults", (string)null);
                 });
 
             modelBuilder.Entity("EduCore.Models.Department", b =>
@@ -174,7 +174,7 @@ namespace EduCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("departments");
+                    b.ToTable("departments", (string)null);
                 });
 
             modelBuilder.Entity("EduCore.Models.Instructor", b =>
@@ -213,7 +213,7 @@ namespace EduCore.Migrations
 
                     b.HasIndex("deptId");
 
-                    b.ToTable("instructors");
+                    b.ToTable("instructors", (string)null);
                 });
 
             modelBuilder.Entity("EduCore.Models.Trainee", b =>
@@ -247,7 +247,7 @@ namespace EduCore.Migrations
 
                     b.HasIndex("deptID");
 
-                    b.ToTable("trainees");
+                    b.ToTable("trainees", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -9,18 +9,25 @@ namespace EduCore
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            // Services
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
+            // Register Session Service
             builder.Services.AddSession();
 
             // Register built-in service
+
+            // Register DbContext
             builder.Services.AddDbContext<APPDbContext>((optionsbuilder) =>
             {
                 optionsbuilder.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
             });
 
-
+            // Register Identity Service
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<APPDbContext>();
  
@@ -38,6 +45,9 @@ namespace EduCore
             builder.Services.AddScoped<CourseTraineeResultsService>();
 
             var app = builder.Build();
+
+            // MiddleWares
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -59,7 +69,7 @@ namespace EduCore
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=LogIn}/{id?}")
                 .WithStaticAssets();
 
             app.Run();
