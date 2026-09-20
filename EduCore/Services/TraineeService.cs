@@ -2,25 +2,24 @@
 using EduCore.Data;
 using EduCore.Models;
 using EduCore.ViewModels;
+using EduCore.Repository;
 
 namespace EduCore.Services
 {
     public class TraineeService
     {
-        private readonly APPDbContext _context;
-        public TraineeService()
+        private readonly ITraineeRepository _traineeRepository;
+        public TraineeService(ITraineeRepository traineeRepository)
         {
-            _context = new APPDbContext();
+            _traineeRepository = traineeRepository;
         }
 
         public TraineeCourseDegreeResultcsViewModel? GetResult(int Tid , int Cid)
         {
-            var crsResult = _context.crsResults.FirstOrDefault(crs => crs.traineeId == Tid && crs.crsId == Cid);
+            var crsResult = _traineeRepository.GetResult(Tid, Cid);
             if (crsResult is null) return null;
-
-            _context.Entry(crsResult).Reference(crs => crs.trainee).Load();
-            _context.Entry(crsResult).Reference(crs => crs.course).Load();
-            return new TraineeCourseDegreeResultcsViewModel()
+            else 
+                return new TraineeCourseDegreeResultcsViewModel()
             {
                 TName = crsResult.trainee.Name,
                 CName = crsResult.course.Name,
@@ -32,22 +31,14 @@ namespace EduCore.Services
         }
         public DisplayTraineeCoursesDegreeViewModel? getAllResults(int Tid)
         {
-            var trainee = _context.trainees.Find(Tid);
+            var trainee = _traineeRepository.GetById(Tid);
             if (trainee is null)
                 return null;
 
             var CourseResults = new DisplayTraineeCoursesDegreeViewModel();
             CourseResults.TraineeName = trainee.Name;
 
-            CourseResults.CourseData = _context.crsResults
-                .Where(crs => crs.traineeId == Tid)
-                .Select(crs => 
-                new CourseDataToDisplayTraineeResultsViewModel()
-                {
-                    Name = crs.course.Name,
-                    Degree = crs.Degree,
-                    State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
-                }).ToList();
+            CourseResults.CourseData = _traineeRepository.getAllResults(Tid);
 
             return CourseResults;
         }
