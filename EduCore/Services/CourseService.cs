@@ -6,6 +6,7 @@ using EduCore.Models;
 using EduCore.Repository;
 using EduCore.ViewModels;
 using System.ComponentModel.Design;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace EduCore.Services
 {
@@ -13,11 +14,14 @@ namespace EduCore.Services
     {
         private readonly ICourseRepository _courseRepository;
         private readonly DepartmentService _departmentService;
+        private readonly InstructorService _instructorService;
 
-
-        public CourseService(ICourseRepository courseRepository , DepartmentService departmentService) {
+        public CourseService(ICourseRepository courseRepository , 
+            DepartmentService departmentService ,
+            InstructorService instructorService) {
             _courseRepository = courseRepository;
             _departmentService = departmentService;
+            _instructorService = instructorService;
         }
 
         public List<Course>? GetAll()
@@ -58,12 +62,12 @@ namespace EduCore.Services
         public void UpdateCourse(Course crs)
         {
             _courseRepository.Update(crs);
+            _courseRepository.Save();
         }
         public void DeleteCourse(int id)
         {
-            if (Exist(id))
                 _courseRepository.Delete(id);
-                    
+                _courseRepository.Save();
         }
 
         public bool Exist(int id)
@@ -92,6 +96,17 @@ namespace EduCore.Services
                 return _courseRepository.GetCoursesByDeptId(deptId);
             else return null;
         }
+
+        public bool AssignInstructor(AssignInstructorViewModel data)
+        {
+            var course = _courseRepository.GetById(data.CourseId);
+            var instructor = _instructorService.GetById(data.InstructorId);
+            if (course is null || instructor is null)
+                return false;
+            course.instructors.Add(instructor);
+            return true;
+        }
+
         public void Save()
         {
             _courseRepository.Save();

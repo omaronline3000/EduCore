@@ -8,10 +8,14 @@ namespace EduCore.Controllers
     {
         private readonly CourseService _courseService;
         private readonly DepartmentService _departmentService;
-        public CourseController(CourseService courseService , DepartmentService departmentService)
+        private readonly InstructorService _instructorService;
+        public CourseController(CourseService courseService , 
+            DepartmentService departmentService,
+            InstructorService instructorService)
         {
             _courseService = courseService;
             _departmentService = departmentService;
+            _instructorService = instructorService;
         }
 
         [HttpGet]
@@ -55,17 +59,32 @@ namespace EduCore.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public IActionResult CouresResults(int id)
-        {
-            var data = _courseService.CourseTraineesDegreesById(id);
-            return View("CourseTraineeResults", data);
-        }
         public IActionResult GetCoursesByDept(int deptId)
         {
             var result = _courseService.CoursesByDeptId(deptId);
             return Json(result);
         }
+
+        [HttpGet]
+        public IActionResult AssignInstructor()
+        {
+            ViewBag.courses = _courseService.GetAll();
+            ViewBag.instructors = _instructorService.GetAll();
+            return View("");
+        }
+        [HttpPost]
+        public IActionResult AssignInstructor(AssignInstructorViewModel dataFromReq)
+        {
+            if (ModelState.IsValid)
+            {
+               bool state = _courseService.AssignInstructor(dataFromReq);
+                if (!state) ModelState.AddModelError("", "Instructor or Course is not exist");
+                else RedirectToAction("AssignInstructor");
+            }
+            return View("");
+        }
+
+
 
         // Remote Validation
         public IActionResult ValidateDegree(int minDegree, int Degree)

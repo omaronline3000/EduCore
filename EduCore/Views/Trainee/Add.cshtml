@@ -1,0 +1,40 @@
+@model AddingTraineeViewModel
+
+@{
+    ViewData["Title"] = "Adding Trainee";
+    SelectList departmentsOptions = new SelectList(Model.Departments, "Id", "Name");
+}
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Add" asp-controller="Trainee" method="post">
+
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <br />
+
+    <label asp-for="ImageURL" class="form-label"></label>
+    <input asp-for="ImageURL" class="form-control" />
+    <span asp-validation-for="ImageURL" class="text-danger"></span>
+    <br />
+
+    <label asp-for="Address" class="form-label"></label>
+    <input asp-for="Address" class="form-control" />
+    <span asp-validation-for="Address" class="text-danger"></span>
+    <br />
+
+    <label asp-for="Grade" class="form-label"></label>
+    <input asp-for="Grade" class="form-control" />
+    <span asp-validation-for="Grade" class="text-danger"></span>
+    <br />
+
+    <label asp-for="depId" class="form-label">Department</label>
+    <select class="form-select" asp-for="depId" asp-items="departmentsOptions">
+        <option value="-1">--- Select Department ---</option>
+    </select>
+    <span asp-validation-for="depId" class="text-danger"></span>
+
+    <br /><br />
+    <input type="submit" class="btn btn-dark" value="Add Trainee" />
+</form>

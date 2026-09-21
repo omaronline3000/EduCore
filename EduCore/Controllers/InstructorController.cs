@@ -49,6 +49,13 @@ namespace EduCore.Controllers
             return RedirectToAction("Index");
         }
         
+        public IActionResult Delete(int id)
+        {
+            _instructorService.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+
         [HttpGet]
         // TODO: edit to make it search by id not name
         public IActionResult Search(string search)

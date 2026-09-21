@@ -17,6 +17,8 @@
         public List<Instructor>? GetAll()
         {
             return _context.instructors
+                .Include(i => i.department)
+                .Include(i => i.course)
                 .ToList();
         }
         public Instructor? GetById(int id)

@@ -51,8 +51,16 @@ namespace EduCore.Services
                 TraineeData = _courseTraineeResultsRepository.GetResultsByCid(Cid)
             };
         }
-        public void AddResult(AddResultViewModel result)
+        public int AddResult(AddResultViewModel result)
         {
+            if (!_courseRepository.Exist(result.crsId) || _traineeRepository.Exist(result.traineeId))
+                return -1;
+            
+            var res = _courseTraineeResultsRepository.GetResultByTidAndCid(result.traineeId, result.crsId);
+            if (res is not null) return 0;
+
+
+
             CrsResult crsResult = new()
             {
                 Degree = result.Degree,
@@ -60,6 +68,8 @@ namespace EduCore.Services
                 crsId = result.crsId
             };
             _courseTraineeResultsRepository.AddResult(crsResult);
+            _courseTraineeResultsRepository.Save();
+            return 1;
         }
         public void UpdateResult(AddResultViewModel result , int id)
         {
@@ -71,11 +81,13 @@ namespace EduCore.Services
                 crsId = result.crsId
             };
             _courseTraineeResultsRepository.UpdateResult(crsResult);
+            _courseTraineeResultsRepository.Save();
         }
         public void DeleteResult(int id)
         {
 
             _courseTraineeResultsRepository.DeleteResult(id);
+            _courseTraineeResultsRepository.Save();
         }
         public void Save()
         {

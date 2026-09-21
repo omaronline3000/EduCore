@@ -18,9 +18,7 @@ namespace EduCore.Services
 
         public List<Instructor>? GetAll()
         {
-            if (_instructorRepository.Exist())
                 return _instructorRepository.GetAll();
-            else return null;
         }
         public Instructor? GetById(int id)
         {
@@ -46,10 +44,12 @@ namespace EduCore.Services
         public void Update(Instructor ins)
         {
             _instructorRepository.Update(ins);
+            _instructorRepository.Save();
         }
         public void Delete(int id)
         {
             _instructorRepository.Delete(id);
+            _instructorRepository.Save();
         }
         public bool Exist(int id)
         {

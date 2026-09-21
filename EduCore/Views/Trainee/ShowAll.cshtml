@@ -1,0 +1,27 @@
+﻿@model List<Trainee>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "All Trainees";
+}
+
+<table class="table table-hover table-active">
+    <thead>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Address</td>
+        <td>GPA</td>
+        <td>Department</td>
+    </thead>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Address</td>
+            <td>@item.Grade</td>
+            <td>@item.department?.Name</td>
+        </tr>
+    }    
+</table>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
 
 namespace EduCore.Controllers
 {
@@ -28,6 +29,29 @@ namespace EduCore.Controllers
         public IActionResult ResultsForC(int Cid) {
             var results = _courseTraineeResultsService.GetResultsByCid(Cid);
             return View("ShowResultsByCourse", results);
+        }
+        [HttpGet]
+        public IActionResult AddResult()
+        {
+            return View("AddResult");
+        }
+        [HttpPost]
+        public IActionResult AddResult(AddResultViewModel data)
+        {
+            if (ModelState.IsValid)
+            {
+                int state = _courseTraineeResultsService.AddResult(data);
+                if (state == -1) ModelState.AddModelError("", "The Trainee or The Course Is not Exist");
+                else if(state == 0) ModelState.AddModelError("", "The Trainee Already has Result for this Course");
+                else return RedirectToAction("AddResult");
+            }
+            return View("AddResult", data);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _courseTraineeResultsService.DeleteResult(id);
+            return RedirectToAction("Index");
         }
     }
 }

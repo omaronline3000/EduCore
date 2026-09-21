@@ -1,0 +1,27 @@
+@model AddResultViewModel
+
+@{
+    ViewData["Title"] = "Add Result";
+}
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="AddResult" asp-controller="Result" method="post">
+
+    <label asp-for="Degree" class="form-label"></label>
+    <input asp-for="Degree" class="form-control" />
+    <span asp-validation-for="Degree" class="text-danger"></span>
+    <br />
+
+    <label asp-for="traineeId" class="form-label"></label>
+    <input asp-for="traineeId" class="form-control" />
+    <span asp-validation-for="traineeId" class="text-danger"></span>
+    <br />
+
+    <label asp-for="crsId" class="form-label"></label>
+    <input asp-for="crsId" class="form-control" />
+    <span asp-validation-for="crsId" class="text-danger"></span>
+    <br />
+
+    <input type="submit" class="btn btn-dark" value="Add" />
+</form>

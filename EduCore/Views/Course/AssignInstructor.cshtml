@@ -1,0 +1,22 @@
+﻿@model AssignInstructorViewModel 
+@{
+    ViewData["Title"] = "Assign Instructor";
+}
+
+<div asp-validation-summary="All"> 
+
+</div>
+<form class="form-control" asp-controller="Course" asp-action="AssignInstructor" method="post">
+    <label asp-for="@Model.CourseId" class="form-control"></label>
+    <input asp-for="@Model.CourseId" class="form-control" />
+    <span asp-validation-for="@Model.CourseId" class="form-control"></span>
+
+    <label asp-for="@Model.InstructorId" class="form-control"></label>
+    <input asp-for="@Model.InstructorId" class="form-control" />
+    <span asp-validation-for="@Model.InstructorId" class="form-control"></span>
+
+    <input type="submit" class="form-control" />
+</form>
+
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Course"></a>
+

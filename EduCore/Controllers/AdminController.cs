@@ -4,9 +4,15 @@ namespace EduCore.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult Index()
+        private readonly CourseService _courseService;
+        public AdminController(CourseService courseService)
         {
-            return View();
+            _courseService = courseService;
         }
+        public IActionResult profile()
+        {
+            return View("AdminDashboard");
+        }
+        
     }
 }

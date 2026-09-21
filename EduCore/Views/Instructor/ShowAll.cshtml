@@ -1,14 +1,14 @@
 ﻿@model List<Instructor>
 
 <br /><br />
-<form method="get" action="/Instructor/Search">
+<form method="get" asp-action="Search" asp-controller="Instructor">
     <label>Search For Instructors</label>
     <input id="search" name="search" placeholder="Instructor Name"/>
     <input type="submit" value="Searh"/>
 </form>
 
 
-<a href="/Instructor/Add">Add Instructor</a>
+<a asp-action="Add" asp-controller="Instructor" class="btn btn-dark">Add Instructor</a>
 
  <table class="table table-bordered table-hover">
 
@@ -21,7 +21,7 @@
             <td>@item.Salary</td>
             <td>@item.department?.Name</td>
             <td>@item.course?.Name</td>
-            <td><a href="/instructor/details/@item.Id">Details</a></td>
+            <td><a class= "btn btn-primary" asp-action="details" asp-controller="Instructor" asp-route-id="@item.Id">Details</a></td>
             </tr>
         }
  </table>

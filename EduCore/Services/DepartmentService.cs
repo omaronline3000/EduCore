@@ -23,6 +23,7 @@ namespace EduCore.Services
         {
 
             _departmentRepository.Add(dep);
+            _departmentRepository.Save();
         }
         public Department? GetById(int id)
         {
@@ -32,10 +33,12 @@ namespace EduCore.Services
         public void Update(Department dep)
         {
             _departmentRepository.Update(dep);
+            _departmentRepository.Save();
         }
         public void Delete(int id)
         {
             _departmentRepository.Delete(id);
+            _departmentRepository.Save();
         }
 
         public bool Exist(int id)

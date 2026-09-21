@@ -9,12 +9,15 @@ namespace EduCore.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly APPDbContext _context;
         public AccountController
             (UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManger)
+            SignInManager<ApplicationUser> signInManger,
+            APPDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManger;
+            _context = context;
         }
         
         [HttpGet]
@@ -113,6 +116,11 @@ namespace EduCore.Controllers
                             Claims.Add(new Claim("Address", appUser.Address));
                         //await _signInManager.SignInAsync()
                         await _signInManager.SignInWithClaimsAsync(appUser, userViewModel.RemeberMe, Claims);
+                        string? RoleId = _context.UserRoles
+                            .Where(usr => usr.UserId == appUser.Id)
+                            .Select(usr => usr.RoleId).FirstOrDefault();
+                        if (RoleId is not null)
+                            IdentityRole Role = _context.Roles.FirstOrDefault(r => r.Id == RoleId).Name;
                         return RedirectToAction("Index", "Course");
                     }
                 }
@@ -134,7 +142,7 @@ namespace EduCore.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return View("Login");
+            return RedirectToAction("Login");
         }
 
     }

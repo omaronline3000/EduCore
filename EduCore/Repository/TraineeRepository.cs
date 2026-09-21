@@ -16,7 +16,9 @@
 
         public List<Trainee>? GetAll()
         {
-            return _context.trainees.ToList();
+            return _context.trainees
+                .Include(t => t.department)
+                .ToList();
         }
         public Trainee? GetById(int id)
         {

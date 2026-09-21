@@ -15,10 +15,19 @@ namespace EduCore.Services
         }
 
 
-        public void AddTrainee(Trainee tra)
+        public void AddTrainee(AddingTraineeViewModel viewModel)
         {
+            Trainee trainee = new()
+            {
+                Name = viewModel.Name,
+                Address = viewModel.Address,
+                ImageURL = viewModel.ImageURL,
+                deptID = viewModel.depId,
+                Grade = viewModel.Grade,
+            };
 
-            _traineeRepository.Add(tra);
+            _traineeRepository.Add(trainee);
+            _traineeRepository.Save();
         }
 
         public List<Trainee>? GetAll()
@@ -33,10 +42,12 @@ namespace EduCore.Services
         public void UpdateTrainee(Trainee tar)
         {
             _traineeRepository.Update(tar);
+            _traineeRepository.Save();
         }
         public void DeleteTrainee(int id)
         {
             _traineeRepository.Delete(id);
+            _traineeRepository.Save();
         }
 
 
