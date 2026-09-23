@@ -1,4 +1,6 @@
 ﻿using EduCore.Repository;
+using System.Security.Claims;
+using System.Security.Cryptography.Pkcs;
 
 namespace EduCore.Controllers
 {
@@ -7,12 +9,13 @@ namespace EduCore.Controllers
         private readonly InstructorService _instructorService;
         private readonly CourseService _courseService;
         private readonly DepartmentService _departmentService;
-        public InstructorController(InstructorService instructorService, DepartmentService departmentService , CourseService courseService) 
+        private readonly TraineeService _traineeService;
+        public InstructorController(InstructorService instructorService, DepartmentService departmentService , CourseService courseService , TraineeService traineeService) 
         {
             _instructorService = instructorService;
             _courseService = courseService;
             _departmentService = departmentService;
-        
+            _traineeService = traineeService;
         }
 
         public IActionResult DashBoard()
@@ -74,6 +77,15 @@ namespace EduCore.Controllers
             }
             else
                 return View("SearchResult", result);
+        }
+
+       public IActionResult GetTrainees()
+        {
+            string uid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var instructor = _instructorService.GetByUserId(uid);
+            var trainees = _traineeService.GetByInstructorId(instructor.Id);
+            // Gemini: Create View to display trainees data (id , name , grade , department)
+            return View();
         }
     }
 }

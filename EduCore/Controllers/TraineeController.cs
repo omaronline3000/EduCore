@@ -61,5 +61,6 @@ namespace EduCore.Controllers
             _trineeService.DeleteTrainee(id);
             return RedirectToAction("Index");
         }
+
     }
 }

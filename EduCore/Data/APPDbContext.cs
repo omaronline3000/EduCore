@@ -6,19 +6,19 @@ namespace EduCore.Data
 {
     public class APPDbContext : IdentityDbContext<ApplicationUser>
     {
-        //public APPDbContext()
-        //{
+        public APPDbContext()
+        {
 
-        //}
+        }
         public APPDbContext(DbContextOptions options) : base(options)
         {
             
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(Connections.SQLConStr);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(Connections.SQLConStr);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

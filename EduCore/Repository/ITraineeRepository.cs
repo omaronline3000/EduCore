@@ -6,6 +6,7 @@
         void Add(Trainee tra);
 
         List<Trainee>? GetAll();
+        List<Trainee>? GetByCourseId(int id);
         Trainee? GetById(int id);
         Trainee? GetByUserId(string id);
         void Update(Trainee tra);

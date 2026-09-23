@@ -22,7 +22,8 @@ namespace EduCore.Services
         {
             return new InstructorInfoViewModel()
             {
-                Id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                id = _instructorRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.Id,
+                Userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
                 Name = User.Identity.Name,
                 Address = User.FindFirstValue("Address"),
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
@@ -39,6 +40,12 @@ namespace EduCore.Services
         {
             return _instructorRepository.GetById(id);
         }
+
+        public Instructor? GetByUserId(string id)
+        {
+            return _instructorRepository.GetByUserId(id);
+        }
+
         public void AddInstructor(AddingInstructorViewModel instructorFromRequest)
         {
            

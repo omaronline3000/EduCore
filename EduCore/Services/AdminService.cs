@@ -8,7 +8,7 @@ namespace EduCore.Services
         {
             return new AdminInfoViewModel()
             {
-                id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                Userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
                 Name = User.Identity?.Name,
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value
             };

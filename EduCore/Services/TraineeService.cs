@@ -10,9 +10,11 @@ namespace EduCore.Services
     public class TraineeService
     {
         private readonly ITraineeRepository _traineeRepository;
-        public TraineeService(ITraineeRepository traineeRepository)
+        private readonly InstructorService _instructorService;
+        public TraineeService(ITraineeRepository traineeRepository , InstructorService instructorService)
         {
             _traineeRepository = traineeRepository;
+            _instructorService = instructorService;
         }
 
 
@@ -40,11 +42,18 @@ namespace EduCore.Services
             return _traineeRepository.GetById(id);
         }
 
+        public List<Trainee>? GetByInstructorId(int id)
+        {
+            var course = _instructorService.GetById(id)?.course;
+            return _traineeRepository.GetByCourseId(course.Id);
+        }
+
         public TraineeInfoViewModel GetInfo(ClaimsPrincipal User)
         {
             return new TraineeInfoViewModel()
             {
-                id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                id = _traineeRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.Id,
+                Userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
                 Name = User.Identity.Name,
                 Address = User.FindFirstValue("Address"),
                 Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,

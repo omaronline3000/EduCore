@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
+using System.Security.Cryptography;
 
 namespace EduCore.Controllers
 {
     public class ResultController : Controller
     {
         private readonly CourseTraineeResultsService _courseTraineeResultsService;
-        public ResultController(CourseTraineeResultsService courseTraineeResultsService)
+        private readonly InstructorService _instructorService;
+        public ResultController(CourseTraineeResultsService courseTraineeResultsService , InstructorService instructorService)
         {
             _courseTraineeResultsService = courseTraineeResultsService;
+            _instructorService = instructorService;
         }
         public IActionResult Index()
         {
@@ -24,6 +27,13 @@ namespace EduCore.Controllers
         {
             var results = _courseTraineeResultsService.GetResultsByTid(Tid);
             return View("ShowResults", results);
+        }
+        
+        public IActionResult ResultsForI(int Iid)
+        {
+            int Cid = _instructorService.GetById(Iid).crsId;
+            var results = _courseTraineeResultsService.GetResultsByCid(Cid);
+            return View("ShowResultsByCourse", results);
         }
 
         public IActionResult ResultsForC(int Cid) {

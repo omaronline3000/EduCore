@@ -43,11 +43,10 @@ namespace EduCore
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<TraineeService>();
             builder.Services.AddScoped<CourseTraineeResultsService>();
-
+            builder.Services.AddScoped<AdminService>();
             var app = builder.Build();
 
             // MiddleWares
-
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

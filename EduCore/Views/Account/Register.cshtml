@@ -7,6 +7,13 @@
 <div asp-validation-summary="All"></div>
 
 <form asp-action="Register" asp-controller="Account" method="post">
+    
+    <div class="form-group">
+        <label asp-for="id" class="control-label"></label>
+        <input asp-for="id" class="form-control" />
+        <span asp-validation-for="id" class="text-danger"></span>
+    </div>
+
     <div class="form-group">
         <label asp-for="UserName" class="control-label"></label>
         <input asp-for="UserName" class="form-control" />

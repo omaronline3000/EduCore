@@ -3,7 +3,8 @@
     public class InstructorInfoViewModel
     {
 
-        public string? Id { get; set; }
+        public int? id { get; set; }
+        public string? Userid { get; set; }
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }

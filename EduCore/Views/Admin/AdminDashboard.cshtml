@@ -17,8 +17,8 @@
                     <span class="text-white-50 small">&bull; Full System Control</span>
                 </div>
                 <h1 class="dashboard-banner-title">Admin Management Console</h1>
-                <p class="dashboard-banner-sub">
-                    Full administrative privileges: add, edit, delete, and view all instructors, courses, trainees, and system accounts.
+                <p class="dashboard-banner-sub mb-0">
+                    Manage all system resources: add, edit, delete, and view instructors, courses, trainees, and platform accounts.
                 </p>
             </div>
             <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
@@ -35,8 +35,8 @@
         </div>
     </div>
 
-    <!-- Admin Profile / His Info & System Overview -->
-    <div class="row g-4 mb-4">
+    <!-- Main Content Grid: Admin Info + Functional Buttons -->
+    <div class="row g-4">
         <!-- Admin Info Card (id, name, email) -->
         <div class="col-lg-4">
             <div class="dash-card h-100">
@@ -45,344 +45,130 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         Admin Information
                     </h5>
-                    <span class="badge-soft badge-soft-primary">Super Admin</span>
                 </div>
                 <div class="dash-card-body">
                     <div class="text-center pb-3 border-bottom mb-3">
-                        <div class="stat-icon primary mx-auto mb-2" style="width: 60px; height: 60px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <div class="stat-icon primary mx-auto mb-2" style="width: 64px; height: 64px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
-                        <h5 class="fw-bold text-dark mb-0" id="adminInfoName">@(User.Identity?.Name ?? "Administrator")</h5>
-                        <p class="text-muted small mb-1">System Master Administrator</p>
-                        <span class="badge-soft badge-soft-success">Status: Active</span>
+                        <h5 class="fw-bold text-dark mb-0" id="adminInfoName">@Model?.Name</h5>
                     </div>
 
                     <!-- Admin Info Fields: id, name, email -->
                     <div class="d-flex justify-content-between py-2 border-bottom">
                         <span class="text-muted small">Admin ID:</span>
-                        <span class="fw-semibold text-dark small" id="adminId">@(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "ADM-101")</span>
+                        <span class="fw-semibold text-dark small" id="adminId">@Model?.id</span>
                     </div>
                     <div class="d-flex justify-content-between py-2 border-bottom">
                         <span class="text-muted small">Full Name:</span>
-                        <span class="fw-semibold text-dark small" id="adminName">@(User.Identity?.Name ?? "Administrator")</span>
+                        <span class="fw-semibold text-dark small" id="adminName">@Model?.Name</span>
                     </div>
-                    <div class="d-flex justify-content-between py-2 border-bottom">
+                    <div class="d-flex justify-content-between py-2">
                         <span class="text-muted small">Email Address:</span>
-                        <span class="fw-semibold text-primary small text-break" id="adminEmail">@(User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? $"{User.Identity?.Name?.ToLower() ?? "admin"}@educore.edu")</span>
-                    </div>
-                    <div class="d-flex justify-content-between pt-2">
-                        <span class="text-muted small">Role:</span>
-                        <span class="badge-soft badge-soft-primary small">Full Authority</span>
+                        <span class="fw-semibold text-primary small text-break" id="adminEmail">@Model?.Email</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 3 Quick KPI Cards -->
+        <!-- Management Functional Buttons & Modules -->
         <div class="col-lg-8">
-            <div class="row g-3 h-100">
-                <div class="col-md-4">
-                    <div class="stat-card">
-                        <div class="stat-card-top">
+            <div class="d-flex flex-column gap-4">
+                
+                <!-- 1. Courses Functionalities: Add / View / Delete / Assign -->
+                <div class="dash-card">
+                    <div class="dash-card-header flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="stat-icon primary" style="width: 38px; height: 38px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            </div>
                             <div>
-                                <p class="stat-label">Courses</p>
-                                <h3 class="stat-value text-primary">Catalog</h3>
-                            </div>
-                            <div class="stat-icon primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <h5 class="dash-card-title mb-0">Courses Management</h5>
+                                <span class="text-muted small">View, add, delete courses, and assign faculty instructors</span>
                             </div>
                         </div>
-                        <div class="d-flex flex-column gap-1 pt-2 border-top">
-                            <div class="d-flex justify-content-between small">
-                                <a asp-controller="Course" asp-action="Index" class="fw-semibold text-primary text-decoration-none">View All Courses &rarr;</a>
-                            </div>
-                            <a asp-controller="Course" asp-action="Add" class="btn btn-sm btn-light border w-100 mt-1 fw-semibold">+ Add Course</a>
+                    </div>
+                    <div class="dash-card-body">
+                        <p class="text-muted small mb-3">
+                            Full control over academic courses. View the full course catalog, register new syllabus courses, delete existing courses, or assign instructors.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-controller="Course" asp-action="Index" class="btn btn-primary fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View All Courses
+                            </a>
+                            <a asp-controller="Course" asp-action="Add" class="btn btn-outline-primary fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add New Course
+                            </a>
+                            <a asp-controller="Course" asp-action="AssignInstructor" class="btn btn-light border fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                Assign Instructor
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="stat-card">
-                        <div class="stat-card-top">
+                <!-- 2. Instructors Functionalities: Add / View / Delete / Edit -->
+                <div class="dash-card">
+                    <div class="dash-card-header flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="stat-icon success" style="width: 38px; height: 38px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </div>
                             <div>
-                                <p class="stat-label">Instructors</p>
-                                <h3 class="stat-value text-success">Faculty</h3>
-                            </div>
-                            <div class="stat-icon success">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <h5 class="dash-card-title mb-0">Instructors Management</h5>
+                                <span class="text-muted small">View, add, inspect details, and delete faculty members</span>
                             </div>
                         </div>
-                        <div class="d-flex flex-column gap-1 pt-2 border-top">
-                            <div class="d-flex justify-content-between small">
-                                <a asp-controller="Instructor" asp-action="Index" class="fw-semibold text-success text-decoration-none">View Faculty &rarr;</a>
-                            </div>
-                            <a asp-controller="Instructor" asp-action="Add" class="btn btn-sm btn-light border w-100 mt-1 fw-semibold">+ Add Instructor</a>
+                    </div>
+                    <div class="dash-card-body">
+                        <p class="text-muted small mb-3">
+                            Full faculty management. Browse all teaching staff, register new faculty instructors, inspect profile details, or remove instructor records.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-controller="Instructor" asp-action="Index" class="btn btn-success fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View All Instructors
+                            </a>
+                            <a asp-controller="Instructor" asp-action="Add" class="btn btn-outline-success fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add New Instructor
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="stat-card">
-                        <div class="stat-card-top">
+                <!-- 3. Trainees Functionalities: Add / View / Delete -->
+                <div class="dash-card">
+                    <div class="dash-card-header flex-wrap gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="stat-icon info" style="width: 38px; height: 38px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
                             <div>
-                                <p class="stat-label">Trainees</p>
-                                <h3 class="stat-value text-info">Students</h3>
-                            </div>
-                            <div class="stat-icon info">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <h5 class="dash-card-title mb-0">Trainees Management</h5>
+                                <span class="text-muted small">View, enroll, and manage trainee student records</span>
                             </div>
                         </div>
-                        <div class="d-flex flex-column gap-1 pt-2 border-top">
-                            <div class="d-flex justify-content-between small">
-                                <a asp-controller="Trainee" asp-action="Index" class="fw-semibold text-info text-decoration-none">View Trainees &rarr;</a>
-                            </div>
-                            <a asp-controller="Trainee" asp-action="Add" class="btn btn-sm btn-light border w-100 mt-1 fw-semibold">+ Add Trainee</a>
+                    </div>
+                    <div class="dash-card-body">
+                        <p class="text-muted small mb-3">
+                            Full student management. Browse registered trainees across departments, register new trainees, and manage enrollments or deletions.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a asp-controller="Trainee" asp-action="Index" class="btn btn-info text-white fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                View All Trainees
+                            </a>
+                            <a asp-controller="Trainee" asp-action="Add" class="btn btn-outline-info fw-semibold px-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add New Trainee
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- 3 Core Admin Management Modules: Courses, Instructors, Trainees -->
-    <div class="row g-4">
-        <!-- 1. Courses Section (Add / View / Delete / Assign) -->
-        <div class="col-lg-12">
-            <div class="dash-card">
-                <div class="dash-card-header flex-wrap gap-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="stat-icon primary" style="width: 38px; height: 38px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                        </div>
-                        <div>
-                            <h5 class="dash-card-title mb-0">Courses Management</h5>
-                            <span class="text-muted small">View, add new courses, assign instructors, and delete courses</span>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <a asp-controller="Course" asp-action="Add" class="btn btn-sm btn-primary fw-semibold">
-                            + Add New Course
-                        </a>
-                        <a asp-controller="Course" asp-action="AssignInstructor" class="btn btn-sm btn-outline-primary fw-semibold">
-                            Assign Instructor
-                        </a>
-                        <a asp-controller="Course" asp-action="Index" class="btn btn-sm btn-light border fw-semibold">
-                            View All Courses
-                        </a>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="dash-table">
-                        <thead>
-                            <tr>
-                                <th>Course Title</th>
-                                <th>Credit Hours</th>
-                                <th>Passing Min</th>
-                                <th>Max Degree</th>
-                                <th>Role Privileges</th>
-                                <th class="text-end">Admin Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-semibold text-dark">ASP.NET Core MVC & Web APIs</td>
-                                <td>40 hrs</td>
-                                <td><span class="badge-soft badge-soft-warning">Min 60</span></td>
-                                <td>100 pts</td>
-                                <td><span class="badge-soft badge-soft-success">Full Access</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border">View</a>
-                                        <a asp-controller="Course" asp-action="AssignInstructor" class="btn btn-light border text-primary">Assign</a>
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this course?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark">Entity Framework Core & SQL Server</td>
-                                <td>36 hrs</td>
-                                <td><span class="badge-soft badge-soft-warning">Min 60</span></td>
-                                <td>100 pts</td>
-                                <td><span class="badge-soft badge-soft-success">Full Access</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border">View</a>
-                                        <a asp-controller="Course" asp-action="AssignInstructor" class="btn btn-light border text-primary">Assign</a>
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this course?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-dark">Object-Oriented Programming with C#</td>
-                                <td>48 hrs</td>
-                                <td><span class="badge-soft badge-soft-warning">Min 50</span></td>
-                                <td>100 pts</td>
-                                <td><span class="badge-soft badge-soft-success">Full Access</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border">View</a>
-                                        <a asp-controller="Course" asp-action="AssignInstructor" class="btn btn-light border text-primary">Assign</a>
-                                        <a asp-controller="Course" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this course?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. Instructors Section (Add / View / Delete / Details) -->
-        <div class="col-lg-6">
-            <div class="dash-card h-100">
-                <div class="dash-card-header flex-wrap gap-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="stat-icon success" style="width: 38px; height: 38px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </div>
-                        <div>
-                            <h5 class="dash-card-title mb-0">Instructors Control</h5>
-                            <span class="text-muted small">Manage teaching faculty</span>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-1">
-                        <a asp-controller="Instructor" asp-action="Add" class="btn btn-sm btn-success fw-semibold">
-                            + Add Instructor
-                        </a>
-                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-sm btn-light border fw-semibold">
-                            View All
-                        </a>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="dash-table">
-                        <thead>
-                            <tr>
-                                <th>Instructor</th>
-                                <th>Department</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Dr. Mohamed Ali</span>
-                                    <small class="text-muted">Senior Instructor</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-primary">Computer Science</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border">Details</a>
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this instructor?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Eng. Sara Ahmed</span>
-                                    <small class="text-muted">Lead Lecturer</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-success">Information Tech</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border">Details</a>
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this instructor?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Dr. Khaled Tarek</span>
-                                    <small class="text-muted">Associate Professor</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-purple">Software Eng.</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border">Details</a>
-                                        <a asp-controller="Instructor" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this instructor?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Trainees Section (Add / View / Delete / Results) -->
-        <div class="col-lg-6">
-            <div class="dash-card h-100">
-                <div class="dash-card-header flex-wrap gap-2">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="stat-icon info" style="width: 38px; height: 38px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <div>
-                            <h5 class="dash-card-title mb-0">Trainees Control</h5>
-                            <span class="text-muted small">Manage enrolled students</span>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-1">
-                        <a asp-controller="Trainee" asp-action="Add" class="btn btn-sm btn-info text-white fw-semibold">
-                            + Add Trainee
-                        </a>
-                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-sm btn-light border fw-semibold">
-                            View All
-                        </a>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="dash-table">
-                        <thead>
-                            <tr>
-                                <th>Trainee</th>
-                                <th>Grade / Status</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Ahmed Mostafa</span>
-                                    <small class="text-muted">CS Department</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-success">Grade: 88 (Good)</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border">Results</a>
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this trainee?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Sara Hassan</span>
-                                    <small class="text-muted">IT Department</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-success">Grade: 94 (Excellent)</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border">Results</a>
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this trainee?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="fw-semibold text-dark d-block">Karim Adel</span>
-                                    <small class="text-muted">SE Department</small>
-                                </td>
-                                <td><span class="badge-soft badge-soft-warning">Grade: 65 (Average)</span></td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border">Results</a>
-                                        <a asp-controller="Trainee" asp-action="Index" class="btn btn-light border text-danger" onclick="return confirm('Delete this trainee?');">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

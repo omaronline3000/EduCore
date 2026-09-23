@@ -20,6 +20,15 @@
                 .Include(t => t.department)
                 .ToList();
         }
+
+        public List<Trainee>? GetByCourseId(int crsid)
+        {
+            return _context.trainees
+                .Where(t => t.crsResults.Any(cr => cr.crsId == crsid))
+                .Include(t => t.department)
+                .ToList();
+        }
+
         public Trainee? GetById(int id)
         {
             return _context.trainees.Find(id);
