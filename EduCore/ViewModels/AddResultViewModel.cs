@@ -5,7 +5,7 @@ namespace EduCore.ViewModels
     public class AddResultViewModel
     {
         [Required(ErrorMessage = "*")]
-        [Range(1, 100)]
+        [Range(0, 100)]
         public int Degree { get; set; }
         [Required(ErrorMessage = "*")]
         public int traineeId { get; set; }

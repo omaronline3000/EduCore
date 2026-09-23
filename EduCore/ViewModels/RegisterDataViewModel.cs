@@ -19,7 +19,10 @@ namespace EduCore.ViewModels
         public string ConfirmedPassowrd {  get; set; }
 
         [Display(Name = "Role")]
-        public string? Role { get; set; }
+        public string Role { get; set; }
+
+
+        public List<RegisterRoleDataViewModel>? Roles { get; set; } 
 
     }
 }

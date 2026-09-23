@@ -14,6 +14,12 @@ namespace EduCore.Controllers
             _departmentService = departmentService;
         
         }
+
+        public IActionResult DashBoard()
+        {
+            return View("InstructorDashboard");
+        }
+
         public IActionResult Index()
         {
             var instructors = _instructorService.GetAll();

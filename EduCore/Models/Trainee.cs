@@ -19,5 +19,9 @@ namespace EduCore.Models
 
         public ICollection<CrsResult> crsResults { get; set; }
 
+        // Identity Staff
+        public string? UserId { get; set; }
+        public ApplicationUser? User { get; set; }
+
     }
 }

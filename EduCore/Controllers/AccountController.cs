@@ -3,62 +3,47 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EduCore.ViewModels;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 namespace EduCore.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly APPDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
         public AccountController
             (UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManger,
-            APPDbContext context)
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManger;
-            _context = context;
+            _roleManager = roleManager;
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Register");
-        }
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterDataViewModel ViewModel)
-        {
-            if (ModelState.IsValid)
+            RegisterDataViewModel model = new RegisterDataViewModel()
             {
-                ApplicationUser appUser = new();
-                appUser.UserName = ViewModel.UserName;
-                appUser.Email = ViewModel.Email;
-                var result = await _userManager.CreateAsync(appUser, ViewModel.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(appUser, false);
-                    return RedirectToAction("Index", "Course");
-                }
-                else
-                {
-                    foreach (var item in result.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
-                }
-            }
-            return View("Register");
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult RegisterAdmin()
-        {
-            return View("RegisterAdmin");
+                Roles = _roleManager.Roles.
+                Select(r => 
+                new RegisterRoleDataViewModel(){ 
+                    Id =  r.Id , 
+                    Name =  r.Name})
+                .ToList()
+            };
+            return View("Register" , model);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> RegisterAdmin(RegisterDataViewModel userViewModel)
+        public async Task<IActionResult> Register(RegisterDataViewModel userViewModel)
         {
+            if(userViewModel.Role.IsNullOrEmpty())
+            {
+                ModelState.AddModelError("", "Please Choose Role");
+            }
             if (ModelState.IsValid)
             {
                 ApplicationUser appUser = new ApplicationUser();
@@ -66,11 +51,10 @@ namespace EduCore.Controllers
                 appUser.Email = userViewModel.Email;
                 var res = await _userManager.CreateAsync(appUser, userViewModel.Password);
                 if (res.Succeeded) { 
-                var result = await _userManager.AddToRoleAsync(appUser, "Admin");
+                var result = await _userManager.AddToRoleAsync(appUser, userViewModel.Role);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(appUser, false);
-                    return RedirectToAction("Add", "Role");
+                    return RedirectToAction("Register");
                 }
                 else
                 {
@@ -88,18 +72,30 @@ namespace EduCore.Controllers
                     }
                 }
             }
+            userViewModel.Roles = _roleManager.Roles.
+                Select(r =>
+                new RegisterRoleDataViewModel()
+                {
+                    Id = r.Id,
+                    Name = r.Name
+                })
+                .ToList();
             return View(userViewModel);
         }
+
 
         [HttpGet]
         public IActionResult Login()
         {
+           if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction("DashBoard", User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value);
             return View("Login");
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel userViewModel)
         {
+            
             if (ModelState.IsValid)
             {
                 List<Claim> Claims = new List<Claim>();
@@ -116,11 +112,6 @@ namespace EduCore.Controllers
                             Claims.Add(new Claim("Address", appUser.Address));
                         //await _signInManager.SignInAsync()
                         await _signInManager.SignInWithClaimsAsync(appUser, userViewModel.RemeberMe, Claims);
-                        string? RoleId = _context.UserRoles
-                            .Where(usr => usr.UserId == appUser.Id)
-                            .Select(usr => usr.RoleId).FirstOrDefault();
-                        if (RoleId is not null)
-                            IdentityRole Role = _context.Roles.FirstOrDefault(r => r.Id == RoleId).Name;
                         return RedirectToAction("Index", "Course");
                     }
                 }

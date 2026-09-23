@@ -53,9 +53,12 @@ namespace EduCore.Services
         }
         public int AddResult(AddResultViewModel result)
         {
-            if (!_courseRepository.Exist(result.crsId) || _traineeRepository.Exist(result.traineeId))
+            if (!_courseRepository.Exist(result.crsId) || !_traineeRepository.Exist(result.traineeId))
                 return -1;
-            
+
+            var trainee = _traineeRepository.GetById(result.traineeId);
+
+
             var res = _courseTraineeResultsRepository.GetResultByTidAndCid(result.traineeId, result.crsId);
             if (res is not null) return 0;
 

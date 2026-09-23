@@ -1,0 +1,76 @@
+@{
+    ViewData["Title"] = "Trainee Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Trainee Dashboard</h2>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Enrolled Courses</h6>
+                    <h3 id="enrolledCourses">--</h3>
+                    <p class="text-muted small">Placeholder: number of enrolled courses (from backend)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Completed Assignments</h6>
+                    <h3 id="completedAssignments">--</h3>
+                    <p class="text-muted small">Placeholder: completed assignments count</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">GPA / Average</h6>
+                    <h3 id="gpa">--</h3>
+                    <p class="text-muted small">Placeholder: GPA or average score (from backend)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 g-3">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">Upcoming Deadlines</div>
+                <div class="card-body">
+                    <ul id="deadlines" class="list-group">
+                        <li class="list-group-item text-muted">Placeholder: upcoming deadlines (from backend)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Quick Links</div>
+                <div class="card-body d-flex flex-column">
+                    <a class="btn btn-primary mb-2" href="#">Go to Courses</a>
+                    <a class="btn btn-outline-secondary mb-2" href="#">View Results</a>
+                    <a class="btn btn-outline-info" href="#">Contact Instructor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">Performance Overview</div>
+                <div class="card-body">
+                    <div id="performanceChart" style="height:220px; display:flex; align-items:center; justify-content:center; border:1px dashed #ddd;">
+                        <span class="text-muted">Placeholder for performance chart (inject data from backend)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

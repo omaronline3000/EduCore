@@ -57,8 +57,19 @@ namespace EduCore.Data
                 .HasOne(t => t.department)
                 .WithMany(d => d.trainees)
                 .HasForeignKey(t => t.deptID);
-                
 
+
+            modelBuilder.Entity<Instructor>()
+                .HasOne(i => i.User)
+                .WithOne()
+                .HasForeignKey<Instructor>(i => i.UserId);
+
+            modelBuilder.Entity<Trainee>()
+                .HasOne(t => t.User)
+                .WithOne()
+                .HasForeignKey<Trainee>(t => t.UserId);
+
+            // Soft-Delete Filter
             modelBuilder.Entity<Instructor>()
                 .HasQueryFilter(i => !i.IsDeleted);
             modelBuilder.Entity<Course>()

@@ -16,7 +16,13 @@ namespace EduCore.Models
         public int deptId { get; set; }
         public int crsId { get; set; }
 
+         
         public Department department { get; set; }
         public Course course { get; set; }
+
+
+        // Identity Staff
+        public string? UserId { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

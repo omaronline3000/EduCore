@@ -9,7 +9,7 @@ namespace EduCore.Controllers
         {
             _courseService = courseService;
         }
-        public IActionResult profile()
+        public IActionResult DashBoard()
         {
             return View("AdminDashboard");
         }

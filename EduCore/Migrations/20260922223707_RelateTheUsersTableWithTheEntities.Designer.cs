@@ -4,6 +4,7 @@ using EduCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduCore.Migrations
 {
     [DbContext(typeof(APPDbContext))]
-    partial class APPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260922223707_RelateTheUsersTableWithTheEntities")]
+    partial class RelateTheUsersTableWithTheEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,9 +258,7 @@ namespace EduCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("deptID");
 
@@ -456,8 +457,8 @@ namespace EduCore.Migrations
             modelBuilder.Entity("EduCore.Models.Trainee", b =>
                 {
                     b.HasOne("EduCore.Models.ApplicationUser", "User")
-                        .WithOne()
-                        .HasForeignKey("EduCore.Models.Trainee", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("EduCore.Models.Department", "department")

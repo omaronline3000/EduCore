@@ -16,6 +16,13 @@ namespace EduCore.Controllers
             _courseTraineeResultsService = courseTraineeResultsService;
             _departmentService = departmentService;
         }
+
+        public IActionResult DashBoard()
+        {
+            return View("TraineeDashboard");
+        }
+
+
         public IActionResult Index()
         {
             var trainees = _trineeService.GetAll();
