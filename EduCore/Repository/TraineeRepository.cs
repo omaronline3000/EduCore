@@ -25,6 +25,11 @@
             return _context.trainees.Find(id);
         }
 
+        public Trainee? GetByUserId(string id)
+        {
+            return _context.trainees.FirstOrDefault(t => t.UserId == id);
+        }
+
         public void Update(Trainee tar)
         {
             _context.trainees.Update(tar);

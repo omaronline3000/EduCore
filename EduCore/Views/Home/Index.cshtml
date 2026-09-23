@@ -1,8 +1,244 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "EduCore - Next-Gen Learning Management System";
+    ViewData["HideHero"] = true;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="py-5 my-2">
+    <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+            <div class="mb-3">
+                <span class="badge-soft badge-soft-primary px-3 py-2 fw-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    Enterprise Learning Management
+                </span>
+            </div>
+            <h1 class="display-4 fw-extrabold text-dark tracking-tight mb-3" style="font-weight: 800; line-height: 1.15;">
+                Empowering Education with <span class="text-primary">EduCore</span>
+            </h1>
+            <p class="lead text-muted mb-4" style="font-size: 1.15rem; line-height: 1.6;">
+                A unified, modern academic platform connecting administrators, faculty instructors, and trainees. Manage comprehensive course curricula, track examination results, and orchestrate student success with clarity.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <a asp-controller="Course" asp-action="ShowAllCourses" class="btn btn-primary btn-lg px-4 py-2 rounded-pill fw-semibold shadow-sm d-flex align-items-center gap-2">
+                    <span>Browse Courses</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a asp-controller="Instructor" asp-action="ShowAll" class="btn btn-outline-secondary btn-lg px-4 py-2 rounded-pill fw-semibold">
+                    Meet Instructors
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-4 pt-2 text-muted small">
+                <div class="d-flex align-items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Role-Based Portals</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Real-Time Results</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Modular Curriculum</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 text-center">
+            <div class="position-relative p-4">
+                <div class="p-4 bg-white rounded-4 shadow-lg border text-start position-relative" style="z-index: 2;">
+                    <!-- Preview Card Header -->
+                    <div class="d-flex align-items-center justify-content-between pb-3 border-bottom mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge-soft badge-soft-success">Live Platform</span>
+                            <span class="fw-bold text-dark">Academic Hub Overview</span>
+                        </div>
+                        <span class="text-muted small">Semester 2026</span>
+                    </div>
+
+                    <!-- Mini KPI Row -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light text-center">
+                                <span class="d-block fw-bold text-primary fs-5">Active</span>
+                                <small class="text-muted" style="font-size: 0.72rem;">Curriculum</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light text-center">
+                                <span class="d-block fw-bold text-success fs-5">Faculty</span>
+                                <small class="text-muted" style="font-size: 0.72rem;">Instructors</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3 bg-light text-center">
+                                <span class="d-block fw-bold text-info fs-5">Trainees</span>
+                                <small class="text-muted" style="font-size: 0.72rem;">Enrolled</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Results Preview -->
+                    <div class="p-3 border rounded-3 bg-light mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-semibold text-dark small">Full-Stack Web Development</span>
+                            <span class="badge-soft badge-soft-success small">Passed (88%)</span>
+                        </div>
+                        <div class="dash-progress">
+                            <div class="dash-progress-bar bg-success" style="width: 88%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-2">
+                        <span class="text-muted small">Authorized Access Ready</span>
+                        <div class="btn-group btn-group-sm">
+                            <a asp-controller="Admin" asp-action="DashBoard" class="btn btn-outline-primary btn-sm">Admin</a>
+                            <a asp-controller="Instructor" asp-action="DashBoard" class="btn btn-outline-success btn-sm">Instructor</a>
+                            <a asp-controller="Trainee" asp-action="DashBoard" class="btn btn-outline-info btn-sm">Trainee</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Three Role Capabilities Section -->
+<section class="py-5 border-top">
+    <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="badge-soft badge-soft-primary px-3 py-1 mb-2">Tailored Workspaces</span>
+        <h2 class="fw-bold text-dark">Built Specifically for Each Role</h2>
+        <p class="text-muted">Explore dedicated features designed for administrators, instructors, and enrolled trainees.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- 1. Administrator -->
+        <div class="col-md-4">
+            <div class="dash-card h-100 p-4">
+                <div class="stat-icon primary mb-3" style="width: 54px; height: 54px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Administrator</h4>
+                <p class="text-muted small mb-4">
+                    Full administrative control across the entire ecosystem. Add, edit, delete, and view instructors, courses, trainees, and manage user identities.
+                </p>
+                <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2">
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Add, Edit, Delete & View Courses</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Add, Edit, Delete & View Instructors</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Add, Edit, Delete & View Trainees</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Assign Faculty & Manage Roles</span>
+                    </li>
+                </ul>
+                <div class="mt-auto">
+                    <a asp-controller="Admin" asp-action="DashBoard" class="btn btn-outline-primary w-100 fw-semibold">
+                        Enter Admin Console &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Instructor -->
+        <div class="col-md-4">
+            <div class="dash-card h-100 p-4">
+                <div class="stat-icon success mb-3" style="width: 54px; height: 54px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Faculty Instructor</h4>
+                <p class="text-muted small mb-4">
+                    Inspect assigned course modules, view enrolled student rosters, and input official examination degrees and evaluations.
+                </p>
+                <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2">
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>View Assigned & Available Courses</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>View Enrolled Trainees Roster</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Add & Submit Trainee Results</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Review Class Performance Standings</span>
+                    </li>
+                </ul>
+                <div class="mt-auto">
+                    <a asp-controller="Instructor" asp-action="DashBoard" class="btn btn-outline-success w-100 fw-semibold">
+                        Enter Instructor Portal &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Trainee -->
+        <div class="col-md-4">
+            <div class="dash-card h-100 p-4">
+                <div class="stat-icon info mb-3" style="width: 54px; height: 54px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Enrolled Trainee</h4>
+                <p class="text-muted small mb-4">
+                    Browse the curriculum catalog, monitor enrolled courses, inspect individual scores, and track passing marks for each course.
+                </p>
+                <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2">
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Browse Curriculum & Department Courses</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>View Results for Each Course</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Track Minimum Passing Thresholds</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Monitor Personal Academic Standing</span>
+                    </li>
+                </ul>
+                <div class="mt-auto">
+                    <a asp-controller="Trainee" asp-action="DashBoard" class="btn btn-outline-info w-100 fw-semibold">
+                        Enter Trainee Portal &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Banner -->
+<section class="py-5">
+    <div class="dashboard-banner text-center p-5">
+        <h2 class="display-6 fw-bold mb-3">Ready to Experience EduCore?</h2>
+        <p class="dashboard-banner-sub mx-auto mb-4" style="max-width: 600px;">
+            Access all educational materials, manage instructors and student results with high efficiency.
+        </p>
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <a asp-controller="Course" asp-action="ShowAllCourses" class="btn btn-light btn-lg px-4 py-2 rounded-pill fw-semibold shadow-sm">
+                Explore Courses
+            </a>
+            @if (User.Identity?.IsAuthenticated != true)
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg px-4 py-2 rounded-pill fw-semibold">
+                    Sign In
+                </a>
+            }
+        </div>
+    </div>
+</section>

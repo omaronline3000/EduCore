@@ -7,7 +7,7 @@
 
         List<Trainee>? GetAll();
         Trainee? GetById(int id);
-
+        Trainee? GetByUserId(string id);
         void Update(Trainee tra);
         void Delete(int id);
         void Save();

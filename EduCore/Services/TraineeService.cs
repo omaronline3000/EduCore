@@ -3,6 +3,7 @@ using EduCore.Data;
 using EduCore.Models;
 using EduCore.ViewModels;
 using EduCore.Repository;
+using System.Security.Claims;
 
 namespace EduCore.Services
 {
@@ -37,6 +38,19 @@ namespace EduCore.Services
         public Trainee? GetById(int id)
         {
             return _traineeRepository.GetById(id);
+        }
+
+        public TraineeInfoViewModel GetInfo(ClaimsPrincipal User)
+        {
+            return new TraineeInfoViewModel()
+            {
+                id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                Name = User.Identity.Name,
+                Address = User.FindFirstValue("Address"),
+                Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+                Department = _traineeRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.department.Name,
+                Grade = Convert.ToString(_traineeRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.Grade)
+            };
         }
 
         public void UpdateTrainee(Trainee tar)

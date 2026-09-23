@@ -5,13 +5,16 @@ namespace EduCore.Controllers
     public class AdminController : Controller
     {
         private readonly CourseService _courseService;
-        public AdminController(CourseService courseService)
+        private readonly AdminService _adminService;
+        public AdminController(CourseService courseService , AdminService adminService)
         {
             _courseService = courseService;
+            _adminService = adminService;
         }
         public IActionResult DashBoard()
         {
-            return View("AdminDashboard");
+            AdminInfoViewModel model = _adminService.GetInfo(User);
+            return View("AdminDashboard", model);
         }
         
     }

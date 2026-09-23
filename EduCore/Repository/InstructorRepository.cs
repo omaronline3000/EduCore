@@ -29,6 +29,11 @@
                 .FirstOrDefault(i => i.Id == id);
         }
 
+        public Instructor? GetByUserId(string id)
+        {
+            return _context.instructors.FirstOrDefault(i => i.UserId == id);
+        }
+
         public List<SearchDataViewModel> GetInstructorsByName(string name)
         {
             var instructorsResults = _context.instructors

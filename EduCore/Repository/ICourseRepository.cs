@@ -10,6 +10,7 @@ namespace EduCore.Repository
         public List<Course> GetAll();
         public List<Course> GetPage(int pageNumber , int pageSize);
         public Course GetById(int id);
+        //public Course? GetCourseByInstructorId(int id);
 
         public void Update(Course crs);
         public void Delete(int id);
@@ -19,7 +20,6 @@ namespace EduCore.Repository
         public bool Exist(int id);
         public bool Exist();
         public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course);
-
         public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId);
     }
 }

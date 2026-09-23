@@ -19,7 +19,8 @@ namespace EduCore.Controllers
 
         public IActionResult DashBoard()
         {
-            return View("TraineeDashboard");
+            TraineeInfoViewModel model = _trineeService.GetInfo(User);
+            return View("TraineeDashboard",model);
         }
 
 

@@ -31,6 +31,11 @@ namespace EduCore.Repository
                 .ToList();
         }
 
+        //public Course? GetCourseByInstructorId(int id)
+        //{
+        //    return _context.courses.FirstOrDefault(c => c.instructors.)
+        //}
+
         public Course? GetById(int id)
         {
             return _context.courses.Find(id);
