@@ -4,7 +4,10 @@ namespace EduCore.ViewModels
 {
     public class RegisterDataViewModel
     {
-        
+
+       // [Required(ErrorMessage = "*")]
+        [Display(Name = "User Id (For Trainees and Instructors)")]
+        public int? id { get; set; }
         public string UserName { get; set; }
 
         [RegularExpression("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")]

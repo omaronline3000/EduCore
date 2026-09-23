@@ -11,14 +11,20 @@ namespace EduCore.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly InstructorService _instructorService;
+        private readonly TraineeService _traineeService;
         public AccountController
             (UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManger,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager ,
+            InstructorService instructorService , 
+            TraineeService traineeService)
         {
             _userManager = userManager;
             _signInManager = signInManger;
             _roleManager = roleManager;
+            _instructorService = instructorService;
+            _traineeService = traineeService;
         }
         
         [Authorize(Roles = "Admin")]
@@ -40,10 +46,15 @@ namespace EduCore.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterDataViewModel userViewModel)
         {
-            if(userViewModel.Role.IsNullOrEmpty())
-            {
+            if (userViewModel.Role.IsNullOrEmpty())
                 ModelState.AddModelError("", "Please Choose Role");
-            }
+            else if (userViewModel.Role != "Admin" && userViewModel.id is null)
+                ModelState.AddModelError("id", "You should add the id for instructors and Trainees");
+            else if (userViewModel.Role == "Instructor" && !_instructorService.Exist((int)userViewModel.id!))
+                ModelState.AddModelError("id", "This Id is not for instructor");
+            else if (userViewModel.Role == "Trainee" && !_traineeService.Exist((int)userViewModel.id!))
+                ModelState.AddModelError("id", "This Id is not for trainee");
+
             if (ModelState.IsValid)
             {
                 ApplicationUser appUser = new ApplicationUser();
@@ -54,6 +65,17 @@ namespace EduCore.Controllers
                 var result = await _userManager.AddToRoleAsync(appUser, userViewModel.Role);
                 if (result.Succeeded)
                 {
+
+                    if(userViewModel.Role == "Instructor")
+                    {
+                            var instructor = _instructorService.GetById((int)userViewModel.id!);
+                            instructor.UserId = appUser.Id;
+                    }else if (userViewModel.Role == "Trainee")
+                        {
+                            var trainee = _traineeService.GetById((int)userViewModel.id!);
+                            trainee.UserId = appUser.Id;
+                        }
+
                     return RedirectToAction("Register");
                 }
                 else
