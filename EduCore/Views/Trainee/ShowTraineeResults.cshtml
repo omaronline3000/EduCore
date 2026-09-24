@@ -1,20 +1,66 @@
-﻿@model TraineeCourseDegreeResultcsViewModel
+@model TraineeCourseDegreeResultcsViewModel
 @{
-   // ViewData["Title"] = "Trainee Results";
+    ViewData["Title"] = "Trainee Course Result";
+    bool isPassed = Model?.State == "Successed" || Model?.State == "Passed" || Model?.Color?.ToLower() == "green";
 }
 
-<table class="table tab-content table-hover">
-    <thead>
-        <td>Name</td>
-        <td>Course</td>
-        <td>Degree</td>
-        <td>Trainee Status</td>
-    </thead>
-    <tr style="--bs-table-bg: @Model?.Color;">
-        <td>@Model?.TName</td>
-        <td>@Model?.CName</td>
-        <td>@Model?.Degree</td>
-        <td>@Model?.State</td>
-    </tr>
-</table>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="text-center pb-4 border-bottom mb-4">
+                    <div class="stat-icon @(isPassed ? "success" : "danger") mx-auto mb-3" style="width: 72px; height: 72px;">
+                        @if (isPassed)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        }
+                    </div>
+                    <span class="badge-soft @(isPassed ? "badge-soft-success" : "badge-soft-danger") px-3 py-1 mb-2 fw-semibold">
+                        @(isPassed ? "Course Passed" : "Needs Retake")
+                    </span>
+                    <h3 class="fw-bold text-dark mb-1">@Model?.TName</h3>
+                    <p class="text-muted small mb-0">Examination Evaluation Record</p>
+                </div>
 
+                <!-- Info Grid -->
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Course Module</span>
+                        <span class="fw-bold text-dark">@Model?.CName</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Degree Achieved</span>
+                        <span class="fw-bold fs-5 @(isPassed ? "text-success" : "text-danger")">@Model?.Degree pts</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Official Status</span>
+                        <div>
+                            @if (isPassed)
+                            {
+                                <span class="badge-soft badge-soft-success px-3 py-1 fw-semibold">@Model?.State</span>
+                            }
+                            else
+                            {
+                                <span class="badge-soft badge-soft-danger px-3 py-1 fw-semibold">@Model?.State</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="text-center pt-3 border-top">
+                    <a asp-action="DashBoard" asp-controller="Trainee" class="btn btn-outline-secondary px-4 rounded-pill">
+                        &larr; Back to Trainee Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

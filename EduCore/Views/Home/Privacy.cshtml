@@ -1,6 +1,44 @@
-﻿@{
+@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="dash-card p-4 p-md-5">
+                <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
+                    <div class="stat-icon primary" style="width: 50px; height: 50px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold text-dark mb-0">Privacy & Security Policy</h3>
+                        <p class="text-muted small mb-0">How EduCore LMS safeguards institutional data</p>
+                    </div>
+                </div>
+
+                <div class="prose text-secondary">
+                    <h5 class="fw-bold text-dark mb-2">1. Information Collection & Usage</h5>
+                    <p class="small text-muted mb-4">
+                        EduCore LMS collects user identity data (such as user credentials, roles, email addresses, and departmental affiliations) strictly for academic authentication and authorization purposes within the learning management system.
+                    </p>
+
+                    <h5 class="fw-bold text-dark mb-2">2. Academic Records Protection</h5>
+                    <p class="small text-muted mb-4">
+                        Student examination results, GPA calculations, and course evaluation grades are protected under role-based access protocols. Only assigned faculty members, authorized administrators, and the individual trainee have access to respective evaluation scores.
+                    </p>
+
+                    <h5 class="fw-bold text-dark mb-2">3. Role-Based Confidentiality</h5>
+                    <p class="small text-muted mb-4">
+                        System operations, course creation, faculty assignments, and user provisioning are governed by identity security barriers, preventing unauthorized exposure of institutional resources.
+                    </p>
+                </div>
+
+                <div class="pt-4 border-top text-end">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+                        &larr; Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

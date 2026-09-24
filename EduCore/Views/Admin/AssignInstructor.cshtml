@@ -1,4 +1,4 @@
-@model AssignInstructorViewModel 
+@model EduCore.ViewModels.AssignInstructorViewModel
 @{
     ViewData["Title"] = "Assign Instructor to Course";
 }
@@ -14,28 +14,32 @@
                     </div>
                     <div>
                         <h4 class="fw-bold text-dark mb-0">Assign Instructor</h4>
-                        <p class="text-muted small mb-0">Link an instructor to a curriculum course</p>
+                        <p class="text-muted small mb-0">Select a course and assign a qualified instructor</p>
                     </div>
                 </div>
 
-                <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
 
-                <form asp-controller="Course" asp-action="AssignInstructor" method="post">
+                <form asp-action="AssignInstructor" asp-controller="Admin" method="post">
                     <div class="mb-3">
-                        <label asp-for="CourseId" class="form-label small fw-semibold text-secondary">Course ID</label>
-                        <input asp-for="CourseId" class="form-control" placeholder="Enter course ID" />
+                        <label asp-for="CourseId" class="form-label small fw-semibold text-secondary">Course</label>
+                        <select asp-for="CourseId" class="form-select" asp-items='new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.courses, "Id", "Name")'>
+                            <option value="">-- Select Course --</option>
+                        </select>
                         <span asp-validation-for="CourseId" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-4">
-                        <label asp-for="InstructorId" class="form-label small fw-semibold text-secondary">Instructor ID</label>
-                        <input asp-for="InstructorId" class="form-control" placeholder="Enter instructor ID" />
+                        <label asp-for="InstructorId" class="form-label small fw-semibold text-secondary">Instructor</label>
+                        <select asp-for="InstructorId" class="form-select" asp-items='new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.instructors, "Id", "Name")'>
+                            <option value="">-- Select Instructor --</option>
+                        </select>
                         <span asp-validation-for="InstructorId" class="text-danger small"></span>
                     </div>
 
                     <div class="d-flex gap-2 justify-content-end pt-3 border-top">
-                        <a class="btn btn-outline-secondary px-4 rounded-pill" asp-action="Index" asp-controller="Course">
-                            Back to Courses
+                        <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary px-4 rounded-pill">
+                            &larr; Admin Dashboard
                         </a>
                         <button type="submit" class="btn btn-primary px-4 rounded-pill fw-semibold shadow-sm">
                             Assign Instructor &rarr;

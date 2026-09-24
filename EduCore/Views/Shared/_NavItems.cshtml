@@ -53,19 +53,6 @@
                         </li>
                     }
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Instructor" asp-action="Index">Instructors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Trainee" asp-action="Index" asp-route-id="1">Trainees</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Trainee" asp-action="AllResults" asp-route-id="1">Results</a>
-                    </li>
-
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
@@ -93,36 +80,6 @@
 
             <!-- Right Controls: Dashboards Switcher & Auth -->
             <ul class="navbar-nav align-items-lg-center gap-2">
-                <!-- Dashboards Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fw-semibold text-secondary px-2" href="#" id="dashMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1 text-primary"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        Dashboards
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dashMenu">
-                        <li>
-                            <a class="dropdown-item py-2" asp-controller="Admin" asp-action="DashBoard">
-                                <span class="d-block fw-semibold text-dark">Admin Dashboard</span>
-                                <small class="text-muted">System metrics & management</small>
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider my-1"></li>
-                        <li>
-                            <a class="dropdown-item py-2" asp-controller="Instructor" asp-action="DashBoard">
-                                <span class="d-block fw-semibold text-dark">Instructor Dashboard</span>
-                                <small class="text-muted">Assigned courses & grading</small>
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider my-1"></li>
-                        <li>
-                            <a class="dropdown-item py-2" asp-controller="Trainee" asp-action="DashBoard">
-                                <span class="d-block fw-semibold text-dark">Trainee Dashboard</span>
-                                <small class="text-muted">Course results & progress</small>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     <li class="nav-item">

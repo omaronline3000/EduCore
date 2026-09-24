@@ -1,17 +1,74 @@
-﻿@model Instructor
+@model Instructor
 
+@{
+    ViewData["Title"] = "Instructor Profile";
+}
 
-<table class="table table-bordered table-hover">
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Profile Header -->
+                <div class="text-center pb-4 border-bottom mb-4">
+                    <div class="stat-icon success mx-auto mb-3" style="width: 72px; height: 72px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <span class="badge-soft badge-soft-success px-3 py-1 mb-2">Faculty Member</span>
+                    <h3 class="fw-bold text-dark mb-1">@Model.Name</h3>
+                    <p class="text-muted small mb-0">System ID: #@Model.Id</p>
+                </div>
 
-  <tr>
-      <td>@Model.Id</td>
-        <td>@Model.Name</td>
-        <td>@Model.Address</td>
-        <td>@Model.Salary</td>
-        <td>@Model.department.Name</td>
-        <td>@Model.course.Name</td>
-</tr>
+                <!-- Info Grid -->
+                <div class="d-flex flex-column gap-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Department</span>
+                        <div>
+                            @if (!string.IsNullOrEmpty(Model.department?.Name))
+                            {
+                                <span class="badge-soft badge-soft-info">@Model.department.Name</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small"><em>None</em></span>
+                            }
+                        </div>
+                    </div>
 
-</table>
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Assigned Course</span>
+                        <div>
+                            @if (!string.IsNullOrEmpty(Model.course?.Name))
+                            {
+                                <span class="badge-soft badge-soft-primary">@Model.course.Name</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small"><em>Unassigned</em></span>
+                            }
+                        </div>
+                    </div>
 
-<a href="/Instructor/Index">Back to Full List</a>
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Monthly Compensation</span>
+                        <span class="fw-bold text-dark fs-6">$@Model.Salary.ToString("N0")</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span class="text-muted small fw-semibold">Address / Location</span>
+                        <span class="text-dark small">@(Model.Address ?? "Not specified")</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex justify-content-between pt-3 border-top">
+                    <a asp-action="ShowAll" asp-controller="Instructor" class="btn btn-outline-secondary px-4 rounded-pill">
+                        &larr; Instructors List
+                    </a>
+                    <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-primary px-4 rounded-pill fw-semibold">
+                        Admin Dashboard &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

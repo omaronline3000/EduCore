@@ -1,75 +1,147 @@
-﻿@model List<Course>
+@model List<Course>
 @{
-    ViewData["Title"] = "Courses";
-}
-<br />
-<br />
-<a asp-action="Add" asp-controller="Course" class="btn btn-primary">Add Course</a>
-<br />
-<br />
-<table class="table table-bordered table-hover">
-
-    <thead>
-        <td>Id</td>
-        <td>Name</td>
-        <td>Degree</td>
-        <td>minDegree</td>
-        <td>Hourse</td>
-        <td>Department</td>
-        <td>Instructors</td>
-    </thead>
-
-    @foreach (var item in Model)
-    {
-        
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Degree</td>
-            <td>@item.minDegree</td>
-            <td>@item.Hourse</td>
-            <td>@item.department?.Name</td>
-            <td>
-                <ol>
-            @foreach (var instructor in item.instructors)
-            {
-                 
-               <li>@instructor?.Name</li>
-                 
-            }
-                </ol>
-            </td>
-
-            <td> <a 
-                asp-action="Delete" 
-                asp-controller="Course" 
-                asp-route-id="@item.Id"
-                onclick="return confirm('Are you sure ?');"
-                class="btn btn-danger">Delete</a>
-            </td>
-            <td>
-                <a asp-action="CouresResults"
-                asp-controller="Course"
-                asp-route-id="@item.Id" 
-                class="btn btn-secondary">Trainees Results</a>
-            </td>
-
-        </tr>
-    }
-</table>
-<br />
-@{
+    ViewData["Title"] = "Course Catalog";
     int prevnum = ViewBag.Num - 1 < 0 ? 0 : ViewBag.Num - 1;
     int nextnum = ViewBag.Num + 1;
 }
-<a asp-action="Index" 
-asp-controller="Course" 
-asp-route-num="@prevnum" 
-class="btn btn-secondary">Previous</a>
 
-<a asp-action="Index" 
-asp-controller="Course" 
-asp-route-num="@nextnum"
-class="btn btn-secondary">Next</a> 
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge-soft badge-soft-primary">Curriculum</span>
+                <span class="text-muted small">&bull; Academic Catalog</span>
+            </div>
+            <h2 class="fw-bold text-dark mb-0">Courses Directory</h2>
+            <p class="text-muted small mb-0">Browse and manage active courses, passing thresholds, and faculty assignments</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Add" asp-controller="Course" class="btn btn-primary rounded-pill px-3 shadow-sm d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add Course</span>
+            </a>
+            <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary rounded-pill px-3">
+                &larr; Admin Dashboard
+            </a>
+        </div>
+    </div>
 
- 
+    <!-- Main Table Card -->
+    <div class="dash-card">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4" style="width: 70px;">ID</th>
+                        <th>Course Name</th>
+                        <th>Department</th>
+                        <th class="text-center">Total Degree</th>
+                        <th class="text-center">Min Passing</th>
+                        <th class="text-center">Credit Hours</th>
+                        <th>Assigned Instructors</th>
+                        <th class="text-end pe-4" style="min-width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-muted">#@item.Id</td>
+                                <td>
+                                    <div class="fw-bold text-dark">@item.Name</div>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.department?.Name))
+                                    {
+                                        <span class="badge-soft badge-soft-info">@item.department.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><em>None</em></span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-primary fw-semibold">@item.Degree pts</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-warning fw-semibold">@item.minDegree pts</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-secondary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        @item.Hourse hrs
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (item.instructors != null && item.instructors.Any())
+                                    {
+                                        <div class="d-flex flex-wrap gap-1">
+                                            @foreach (var instructor in item.instructors)
+                                            {
+                                                <span class="badge-soft badge-soft-success small py-1 px-2">@instructor?.Name</span>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><em>Unassigned</em></span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-action="ResultsForC"
+                                           asp-controller="Result"
+                                           asp-route-Cid="@item.Id"
+                                           class="btn btn-outline-primary btn-sm"
+                                           title="View Trainee Results">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                            Results
+                                        </a>
+                                        <a asp-action="Delete"
+                                           asp-controller="Course"
+                                           asp-route-id="@item.Id"
+                                           onclick="return confirm('Are you sure you want to delete course: @item.Name?');"
+                                           class="btn btn-outline-danger btn-sm"
+                                           title="Delete Course">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5 text-muted">
+                                <p class="mb-0">No courses currently available.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer / Pagination -->
+        <div class="d-flex justify-content-between align-items-center p-3 border-top bg-light rounded-bottom">
+            <span class="text-muted small">Showing Page @(ViewBag.Num != null ? (int)ViewBag.Num + 1 : 1)</span>
+            <div class="d-flex gap-2">
+                <a asp-action="Index"
+                   asp-controller="Course"
+                   asp-route-num="@prevnum"
+                   class="btn btn-outline-secondary btn-sm px-3 rounded-pill @(ViewBag.Num == 0 ? "disabled" : "")">
+                    &larr; Previous
+                </a>
+                <a asp-action="Index"
+                   asp-controller="Course"
+                   asp-route-num="@nextnum"
+                   class="btn btn-outline-primary btn-sm px-3 rounded-pill">
+                    Next &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

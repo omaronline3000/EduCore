@@ -135,7 +135,7 @@ namespace EduCore.Controllers
                             Claims.Add(new Claim("Address", appUser.Address));
                         //await _signInManager.SignInAsync()
                         await _signInManager.SignInWithClaimsAsync(appUser, userViewModel.RemeberMe, Claims);
-                        return RedirectToAction("Index", "Course");
+                        return RedirectToAction("DashBoard", User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value);
                     }
                 }
             }

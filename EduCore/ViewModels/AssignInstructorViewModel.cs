@@ -8,5 +8,7 @@ namespace EduCore.ViewModels
         public int InstructorId { get; set; }
         [Required(ErrorMessage = "*")]
         public int CourseId { get; set; }
+
+
     }
 }

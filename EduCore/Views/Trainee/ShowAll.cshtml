@@ -1,27 +1,95 @@
-﻿@model List<Trainee>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model List<Trainee>
+
 @{
     ViewData["Title"] = "All Trainees";
 }
 
-<table class="table table-hover table-active">
-    <thead>
-        <td>Id</td>
-        <td>Name</td>
-        <td>Address</td>
-        <td>GPA</td>
-        <td>Department</td>
-    </thead>
-    @foreach(var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Address</td>
-            <td>@item.Grade</td>
-            <td>@item.department?.Name</td>
-        </tr>
-    }    
-</table>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge-soft badge-soft-info">Enrolled Trainees</span>
+                <span class="text-muted small">&bull; Student Directory</span>
+            </div>
+            <h2 class="fw-bold text-dark mb-0">Trainees Directory</h2>
+            <p class="text-muted small mb-0">All enrolled trainees, academic standing, and assigned departments</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Add" asp-controller="Trainee" class="btn btn-primary rounded-pill px-3 shadow-sm d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add Trainee</span>
+            </a>
+            <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary rounded-pill px-3">
+                &larr; Admin Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="dash-card">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4" style="width: 70px;">ID</th>
+                        <th>Trainee Name</th>
+                        <th>Address</th>
+                        <th class="text-center">GPA / Grade</th>
+                        <th>Department</th>
+                        <th class="text-end pe-4">Academic Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-muted">#@item.Id</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar-circle-sm bg-light text-info fw-bold" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid #e2e8f0;">
+                                            @(string.IsNullOrEmpty(item.Name) ? "?" : item.Name.Substring(0, 1).ToUpper())
+                                        </div>
+                                        <span class="fw-bold text-dark">@item.Name</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted small">@(item.Address ?? "N/A")</td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-success fw-bold">@item.Grade</span>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.department?.Name))
+                                    {
+                                        <span class="badge-soft badge-soft-primary">@item.department.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><em>None</em></span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-action="ResultsForT"
+                                       asp-controller="Result"
+                                       asp-route-Tid="@item.Id"
+                                       class="btn btn-outline-primary btn-sm px-3 rounded-pill">
+                                        View Results &rarr;
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <p class="mb-0">No trainees found in the system.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,36 +1,72 @@
 @model List<Course>?
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Enrolled Courses";
 }
 
-<h1>Courses</h1>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge-soft badge-soft-info">Trainee Study Plan</span>
+                <span class="text-muted small">&bull; Course Curriculum</span>
+            </div>
+            <h2 class="fw-bold text-dark mb-0">Enrolled Courses</h2>
+            <p class="text-muted small mb-0">Overview of courses, credit hours, and passing score thresholds</p>
+        </div>
+        <div>
+            <a class="btn btn-outline-secondary rounded-pill px-3" asp-controller="Trainee" asp-action="DashBoard">
+                &larr; Trainee Dashboard
+            </a>
+        </div>
+    </div>
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Degree</th>
-            <th scope="col">minDegree</th>
-            <th scope="col">Hourse</th>
-        </tr>
-    </thead>
-    <tbody>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Degree</td>
-                <td>@item.minDegree</td>
-                <td>@item.Hourse</td>
-            </tr>
-        }
-    }
-    </tbody>
-</table>
-
-<div>
-    <a class="btn btn-secondary" asp-controller="Trainee" asp-action="DashBoard">Back To DashBoard</a>
+    <!-- Table Card -->
+    <div class="dash-card">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Course Name</th>
+                        <th class="text-center">Total Points</th>
+                        <th class="text-center">Min Passing Score</th>
+                        <th class="text-center pe-4">Credit Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-bold text-dark">@item.Name</div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-primary fw-semibold">@item.Degree pts</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge-soft badge-soft-warning fw-semibold">@item.minDegree pts</span>
+                                </td>
+                                <td class="text-center pe-4">
+                                    <span class="badge-soft badge-soft-secondary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        @item.Hourse hrs
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <p class="mb-0">No active course enrollments found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-

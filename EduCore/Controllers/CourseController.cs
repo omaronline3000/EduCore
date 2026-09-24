@@ -65,24 +65,7 @@ namespace EduCore.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        public IActionResult AssignInstructor()
-        {
-            ViewBag.courses = _courseService.GetAll();
-            ViewBag.instructors = _instructorService.GetAll();
-            return View("");
-        }
-        [HttpPost]
-        public IActionResult AssignInstructor(AssignInstructorViewModel dataFromReq)
-        {
-            if (ModelState.IsValid)
-            {
-               bool state = _courseService.AssignInstructor(dataFromReq);
-                if (!state) ModelState.AddModelError("", "Instructor or Course is not exist");
-                else RedirectToAction("AssignInstructor");
-            }
-            return View("");
-        }
+        
 
 
 

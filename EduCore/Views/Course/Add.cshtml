@@ -1,37 +1,76 @@
-﻿@model AddCoursesViewModel
+@model AddCoursesViewModel
 
 @{
-    ViewData["Title"] = "Adding Course";
-    SelectList departmetnsOptions = new SelectList(Model.departments,"Id","Name");
+    ViewData["Title"] = "Add New Course";
+    SelectList departmentsOptions = new SelectList(Model.departments, "Id", "Name");
 }
 
-<div asp-validation-summary="All" class="text-danger">
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
+                    <div class="stat-icon primary" style="width: 50px; height: 50px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-dark mb-0">Add New Course</h4>
+                        <p class="text-muted small mb-0">Create a new course module and assign it to an academic department</p>
+                    </div>
+                </div>
 
+                <!-- Validation Summary -->
+                <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+                <!-- Form -->
+                <form asp-action="SaveAdd" asp-controller="Course" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label small fw-semibold text-secondary">Course Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="e.g. Advanced C# & .NET Core" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label asp-for="Degree" class="form-label small fw-semibold text-secondary">Total Degree</label>
+                            <input asp-for="Degree" class="form-control" placeholder="e.g. 100" />
+                            <span asp-validation-for="Degree" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="minDegree" class="form-label small fw-semibold text-secondary">Min Passing Degree</label>
+                            <input asp-for="minDegree" class="form-control" placeholder="e.g. 50" />
+                            <span asp-validation-for="minDegree" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="Hourse" class="form-label small fw-semibold text-secondary">Credit Hours</label>
+                            <input asp-for="Hourse" class="form-control" placeholder="e.g. 40" />
+                            <span asp-validation-for="Hourse" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="DeptId" class="form-label small fw-semibold text-secondary">Academic Department</label>
+                        <select class="form-select" asp-for="DeptId" asp-items="departmentsOptions">
+                            <option value="-1">-- Select Department --</option>
+                        </select>
+                        <span asp-validation-for="DeptId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end pt-3 border-top">
+                        <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary px-4 rounded-pill">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-semibold shadow-sm">
+                            Save Course &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<form asp-action="SaveAdd" asp-controller="Course" method="post">
 
-   <label asp-for="Name" class="form-label"></label>
-   <input asp-for="Name" class="form-control"/>
-   <span asp-validation-for="Name" class="text-danger"></span> 
-   <br />
-    <label asp-for="Degree" class="form-label"></label>
-    <input asp-for="Degree" class="form-control" />
-    <span asp-validation-for="Degree" class="text-danger"></span>
-    <br />
-    <label asp-for="minDegree" class="form-label"></label>
-    <input asp-for="minDegree" class="form-control" />
-    <span asp-validation-for="minDegree" class="text-danger"></span>
-    <br />
-    <label asp-for="Hourse" class="form-label"></label>
-    <input asp-for="Hourse" class="form-control" />
-    <span asp-validation-for="Hourse" class="text-danger"></span>
-    <br />
-    <label asp-for="DeptId" class="form-label"></label>
-    <select class="form-select" asp-for="DeptId" asp-items="departmetnsOptions"> 
-        <option value="-1">--- Select Department ---</option>
-    </select>
-    <span asp-validation-for="DeptId" class="text-danger"></span>
-
-    <br /><br />
-    <input type="submit" class="btn btn-dark"/>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

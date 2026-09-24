@@ -1,56 +1,108 @@
-﻿@model AddingInstructorViewModel
+@model AddingInstructorViewModel
 
-<form method="post" action="/Instructor/SaveAdd">
+@{
+    ViewData["Title"] = "Add New Instructor";
+}
 
-    <label> Name </label>
-    <input name="name" id="name" type="text" value="@Model.Name"/>
-    <label> Salary </label>
-    <input name="salary" id="salary" type="number" value="@Model.salary"/>
-    <label> Address </label>
-    <input name="address" id="address" type="text" value="@Model.Address"/>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
+                    <div class="stat-icon success" style="width: 50px; height: 50px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-dark mb-0">Add New Instructor</h4>
+                        <p class="text-muted small mb-0">Register faculty member, assign compensation, and allocate to department</p>
+                    </div>
+                </div>
 
-    <label> Department </label>
+                <form method="post" action="/Instructor/SaveAdd">
+                    <div class="mb-3">
+                        <label for="name" class="form-label small fw-semibold text-secondary">Full Name</label>
+                        <input name="name" id="name" type="text" class="form-control" value="@Model.Name" placeholder="Dr. Jane Doe" required />
+                    </div>
 
-    <select name="DepartmentId" onchange="GetCourses()" id="Departments">
-        @foreach(var item in Model.departments)
-            {
-                if (item.Id == Model.DepartmentId)
-                {
-                <option value="@item.Id" selected>@item.Name</option>
-                }
-                else {
-                    <option value="@item.Id">@item.Name</option>
-                }
-            }
-            
-    </select>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="salary" class="form-label small fw-semibold text-secondary">Monthly Salary ($)</label>
+                            <input name="salary" id="salary" type="number" class="form-control" value="@Model.salary" placeholder="e.g. 5000" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="address" class="form-label small fw-semibold text-secondary">Address / Location</label>
+                            <input name="address" id="address" type="text" class="form-control" value="@Model.Address" placeholder="e.g. Cairo, Egypt" required />
+                        </div>
+                    </div>
 
-    <label> Course </label>
-    
-    <select name="CourseId" id="CourseId"> </select>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="Departments" class="form-label small fw-semibold text-secondary">Department</label>
+                            <select name="DepartmentId" onchange="GetCourses()" id="Departments" class="form-select">
+                                @if (Model.departments != null)
+                                {
+                                    foreach (var item in Model.departments)
+                                    {
+                                        if (item.Id == Model.DepartmentId)
+                                        {
+                                            <option value="@item.Id" selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="CourseId" class="form-label small fw-semibold text-secondary">Assigned Course</label>
+                            <select name="CourseId" id="CourseId" class="form-select"></select>
+                        </div>
+                    </div>
 
-    <input type="submit" value="Add Instructor"/>
+                    <div class="d-flex gap-2 justify-content-end pt-3 border-top">
+                        <a asp-controller="Admin" asp-action="DashBoard" class="btn btn-outline-secondary px-4 rounded-pill">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success px-4 rounded-pill fw-semibold shadow-sm">
+                            Add Instructor &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-</form>
-
-<script>
-    $(document).ready(function() {
-        GetCourses();
-    });
-
-    function GetCourses() {
-        const selectedDeptId = document.getElementById("Departments").value;
-        const courseDisplay = document.getElementById("CourseId");
-
-        courseDisplay.innerHTML = "";
-        $.ajax({
-            url: "/Course/GetCoursesByDept?deptId=" + selectedDeptId,
-            success: function(result) {
-                result.forEach(item => {
-                    courseDisplay.innerHTML +=
-                        `<option value="${item.id}">${item.name}</option>`;
-                });
-            }
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            GetCourses();
         });
-    }
-</script>
+
+        function GetCourses() {
+            const selectedDeptEl = document.getElementById("Departments");
+            if (!selectedDeptEl) return;
+            const selectedDeptId = selectedDeptEl.value;
+            const courseDisplay = document.getElementById("CourseId");
+            if (!courseDisplay) return;
+
+            courseDisplay.innerHTML = "";
+            $.ajax({
+                url: "/Course/GetCoursesByDept?deptId=" + selectedDeptId,
+                success: function(result) {
+                    if (result && result.length > 0) {
+                        result.forEach(item => {
+                            courseDisplay.innerHTML +=
+                                `<option value="${item.id}">${item.name}</option>`;
+                        });
+                    } else {
+                        courseDisplay.innerHTML = `<option value="">No courses in this department</option>`;
+                    }
+                }
+            });
+        }
+    </script>
+}

@@ -1,40 +1,75 @@
 @model AddingTraineeViewModel
 
 @{
-    ViewData["Title"] = "Adding Trainee";
+    ViewData["Title"] = "Add New Trainee";
     SelectList departmentsOptions = new SelectList(Model.Departments, "Id", "Name");
 }
 
-<div asp-validation-summary="All" class="text-danger"></div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
+                    <div class="stat-icon info" style="width: 50px; height: 50px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-dark mb-0">Enroll New Trainee</h4>
+                        <p class="text-muted small mb-0">Register student identity and assign academic department</p>
+                    </div>
+                </div>
 
-<form asp-action="Add" asp-controller="Trainee" method="post">
+                <div asp-validation-summary="All" class="text-danger small mb-3"></div>
 
-    <label asp-for="Name" class="form-label"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
-    <br />
+                <form asp-action="Add" asp-controller="Trainee" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label small fw-semibold text-secondary">Full Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="e.g. John Doe" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
 
-    <label asp-for="ImageURL" class="form-label"></label>
-    <input asp-for="ImageURL" class="form-control" />
-    <span asp-validation-for="ImageURL" class="text-danger"></span>
-    <br />
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Grade" class="form-label small fw-semibold text-secondary">GPA / Current Grade</label>
+                            <input asp-for="Grade" class="form-control" placeholder="e.g. 3.75" />
+                            <span asp-validation-for="Grade" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Address" class="form-label small fw-semibold text-secondary">Address / Residence</label>
+                            <input asp-for="Address" class="form-control" placeholder="e.g. Alexandria, Egypt" />
+                            <span asp-validation-for="Address" class="text-danger small"></span>
+                        </div>
+                    </div>
 
-    <label asp-for="Address" class="form-label"></label>
-    <input asp-for="Address" class="form-control" />
-    <span asp-validation-for="Address" class="text-danger"></span>
-    <br />
+                    <div class="mb-3">
+                        <label asp-for="ImageURL" class="form-label small fw-semibold text-secondary">Profile Image URL</label>
+                        <input asp-for="ImageURL" class="form-control" placeholder="https://example.com/avatar.jpg" />
+                        <span asp-validation-for="ImageURL" class="text-danger small"></span>
+                    </div>
 
-    <label asp-for="Grade" class="form-label"></label>
-    <input asp-for="Grade" class="form-control" />
-    <span asp-validation-for="Grade" class="text-danger"></span>
-    <br />
+                    <div class="mb-4">
+                        <label asp-for="depId" class="form-label small fw-semibold text-secondary">Academic Department</label>
+                        <select class="form-select" asp-for="depId" asp-items="departmentsOptions">
+                            <option value="-1">-- Select Department --</option>
+                        </select>
+                        <span asp-validation-for="depId" class="text-danger small"></span>
+                    </div>
 
-    <label asp-for="depId" class="form-label">Department</label>
-    <select class="form-select" asp-for="depId" asp-items="departmentsOptions">
-        <option value="-1">--- Select Department ---</option>
-    </select>
-    <span asp-validation-for="depId" class="text-danger"></span>
+                    <div class="d-flex gap-2 justify-content-end pt-3 border-top">
+                        <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary px-4 rounded-pill">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4 rounded-pill fw-semibold shadow-sm">
+                            Enroll Trainee &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <br /><br />
-    <input type="submit" class="btn btn-dark" value="Add Trainee" />
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

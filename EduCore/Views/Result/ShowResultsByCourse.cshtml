@@ -1,31 +1,99 @@
 @model DisplayCourseWithTraineeDataViewModel
 @{
-    ViewBag.Title = "Course Results";
+    ViewBag.Title = "Course Results - " + Model.CourseTitle;
 }
 
-<h1 class="card-title">@Model.CourseTitle</h1>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge-soft badge-soft-primary">Course Evaluation</span>
+                <span class="text-muted small">&bull; Roster Standings</span>
+            </div>
+            <h2 class="fw-bold text-dark mb-0">@Model.CourseTitle</h2>
+            <p class="text-muted small mb-0">Individual student scores and qualification status for this course</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="ShowAllCourses" asp-controller="Course" class="btn btn-outline-secondary rounded-pill px-3">
+                &larr; Courses Catalog
+            </a>
+            <a asp-action="DashBoard" asp-controller="Instructor" class="btn btn-primary rounded-pill px-3 shadow-sm">
+                Instructor Dashboard &rarr;
+            </a>
+        </div>
+    </div>
 
-<table class="table tab-content table-hover">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Degree</th>
-            <th>Trainee Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.TraineeData != null)
-        {
-            foreach (var item in Model.TraineeData)
-            {
-                <tr>
-                    <td style="background-color: @item.Color;">@item.Name</td>
-                    <td style="background-color: @item.Color;">@item.Degree</td>
-                    <td style="background-color: @item.Color;">@item.State</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
-<br />
-<a asp-action="Index" asp-controller="Result">Return To List</a>
+    <!-- Results Table Card -->
+    <div class="dash-card">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Trainee Name</th>
+                        <th class="text-center" style="width: 150px;">Score Achieved</th>
+                        <th style="width: 250px;">Score Gauge</th>
+                        <th class="text-end pe-4" style="width: 160px;">Standing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.TraineeData != null && Model.TraineeData.Any())
+                    {
+                        foreach (var tData in Model.TraineeData)
+                        {
+                            bool isPassed = tData.State == "Successed" || tData.State == "Passed" || tData.Color?.ToLower() == "green";
+                            int score = tData.Degree;
+                            if (score > 100) score = 100;
+                            if (score < 0) score = 0;
+
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar-circle-sm bg-light text-primary fw-bold" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid #e2e8f0;">
+                                            @(string.IsNullOrEmpty(tData.Name) ? "?" : tData.Name.Substring(0, 1).ToUpper())
+                                        </div>
+                                        <span class="fw-bold text-dark">@tData.Name</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="fw-bold fs-6 @(isPassed ? "text-success" : "text-danger")">
+                                        @tData.Degree
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="dash-progress" style="height: 8px;">
+                                        <div class="dash-progress-bar @(isPassed ? "bg-success" : "bg-danger")" style="width: @score%;"></div>
+                                    </div>
+                                </td>
+                                <td class="text-end pe-4">
+                                    @if (isPassed)
+                                    {
+                                        <span class="badge-soft badge-soft-success px-3 py-1 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="me-1"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            Passed
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-soft badge-soft-danger px-3 py-1 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="me-1"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                            @tData.State
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <p class="mb-0">No recorded examination submissions for this course.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

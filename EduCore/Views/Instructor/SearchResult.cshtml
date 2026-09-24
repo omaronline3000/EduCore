@@ -1,23 +1,102 @@
-﻿@model List<SearchDataViewModel>
+@model List<SearchDataViewModel>
 
-    <br />
-    <br />
-    <h1 style="color: blue;">Search Result</h1>
+@{
+    ViewData["Title"] = "Instructor Search Results";
+}
 
-<table class="table table-bordered table-hover">
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge-soft badge-soft-primary">Search</span>
+                <span class="text-muted small">&bull; Instructors Query</span>
+            </div>
+            <h2 class="fw-bold text-dark mb-0">Search Results</h2>
+            <p class="text-muted small mb-0">Showing matching faculty records</p>
+        </div>
+        <div>
+            <a asp-action="ShowAll" asp-controller="Instructor" class="btn btn-outline-secondary rounded-pill px-3">
+                &larr; Back to Full List
+            </a>
+        </div>
+    </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Address</td>
-            <td>@item.Salary</td>
-            <td>@item.department</td>
-            <td>@item.course</td>
-            <td><a href="/instructor/details/@item.Id">Details</a></td>
-        </tr>
-    }
-</table>
-
-<a href="/Instructor/Index">Back to Full List</a>
+    <!-- Results Table Card -->
+    <div class="dash-card">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4" style="width: 70px;">ID</th>
+                        <th>Instructor Name</th>
+                        <th>Address</th>
+                        <th>Salary</th>
+                        <th>Department</th>
+                        <th>Assigned Course</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-muted">#@item.Id</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar-circle-sm bg-light text-primary fw-bold" style="width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid #e2e8f0;">
+                                            @(string.IsNullOrEmpty(item.Name) ? "?" : item.Name.Substring(0, 1).ToUpper())
+                                        </div>
+                                        <span class="fw-bold text-dark">@item.Name</span>
+                                    </div>
+                                </td>
+                                <td class="text-muted small">@(item.Address ?? "N/A")</td>
+                                <td>
+                                    <span class="fw-semibold text-dark">$@item.Salary.ToString("N0")</span>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.department))
+                                    {
+                                        <span class="badge-soft badge-soft-info">@item.department</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><em>None</em></span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.course))
+                                    {
+                                        <span class="badge-soft badge-soft-success">@item.course</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><em>Unassigned</em></span>
+                                    }
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-action="details"
+                                       asp-controller="Instructor"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm px-3 rounded-pill">
+                                        Details &rarr;
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                <p class="mb-0">No instructors matched your search criteria.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

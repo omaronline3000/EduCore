@@ -109,6 +109,7 @@ namespace EduCore.Services
             if (course is null || instructor is null)
                 return false;
             course.instructors.Add(instructor);
+            Save();
             return true;
         }
 

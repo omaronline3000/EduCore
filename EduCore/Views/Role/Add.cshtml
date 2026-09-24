@@ -1,14 +1,46 @@
 @model AddRoleViewModel
 
 @{
-    ViewData["Title"] = "Adding Role";
+    ViewData["Title"] = "Add New Role";
 }
 
-<div asp-validation-summary="All" class="text-danger"></div>
-<form method="post" action="/Role/Add">
-    <label asp-for="Name" class="form-label"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
-    <br /><br />
-    <input type="submit" class="btn btn-dark" />
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <div class="stat-icon warning mx-auto mb-3" style="width: 56px; height: 56px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <h3 class="fw-bold text-dark mb-1">Create System Role</h3>
+                    <p class="text-muted small mb-0">Define access permissions and role groups</p>
+                </div>
+
+                <div asp-validation-summary="All" class="text-danger small mb-3"></div>
+
+                <form method="post" action="/Role/Add">
+                    <div class="mb-4">
+                        <label asp-for="Name" class="form-label small fw-semibold text-secondary">Role Name</label>
+                        <input asp-for="Name" class="form-control" placeholder="e.g. Admin, Instructor, Trainee" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-semibold shadow-sm mb-3">
+                        Save Role &rarr;
+                    </button>
+                </form>
+
+                <div class="text-center pt-3 border-top">
+                    <a asp-action="DashBoard" asp-controller="Admin" class="btn btn-outline-secondary btn-sm px-3 rounded-pill">
+                        &larr; Back to Admin Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -17,42 +17,6 @@
         <partial name="_NavItems"></partial>
     </header>
 
-    @if (ViewData["HideHero"] as bool? != true)
-    {
-        <section class="hero py-5 border-bottom">
-            <div class="container">
-                <div class="row align-items-center gy-4">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <span class="badge-soft badge-soft-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                                Enterprise Learning Management
-                            </span>
-                        </div>
-                        <h1 class="display-5 fw-bold text-dark mb-3">
-                            Learn. Build. <span class="text-primary">Succeed.</span>
-                        </h1>
-                        <p class="lead text-muted mb-4">
-                            A lightweight, modern interface to orchestrate courses, instructors, and student evaluation pipelines with precision.
-                        </p>
-                        <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm" asp-controller="Course" asp-action="ShowAllCourses">
-                                Browse Courses &rarr;
-                            </a>
-                            <a class="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold" asp-controller="Instructor" asp-action="ShowAll">
-                                Browse Instructors
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 text-center">
-                        <div class="hero-image-box">
-                            <img src="~/assets/img/avataaars.svg" alt="EduCore Learning" class="img-fluid hero-img" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
 
     <div class="container flex-grow-1">
         <main role="main" class="pb-4">
@@ -74,10 +38,6 @@
                 <div class="col-md-6 text-center text-md-end">
                     <ul class="list-inline mb-0 small">
                         <li class="list-inline-item"><a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none hover-primary">Home</a></li>
-                        <li class="list-inline-item text-muted">&bull;</li>
-                        <li class="list-inline-item"><a asp-controller="Course" asp-action="ShowAllCourses" class="text-muted text-decoration-none hover-primary">Courses</a></li>
-                        <li class="list-inline-item text-muted">&bull;</li>
-                        <li class="list-inline-item"><a asp-controller="Instructor" asp-action="ShowAll" class="text-muted text-decoration-none hover-primary">Instructors</a></li>
                         <li class="list-inline-item text-muted">&bull;</li>
                         <li class="list-inline-item"><a asp-controller="Home" asp-action="Privacy" class="text-muted text-decoration-none hover-primary">Privacy Policy</a></li>
                     </ul>

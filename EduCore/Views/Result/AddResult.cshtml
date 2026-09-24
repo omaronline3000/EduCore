@@ -1,27 +1,59 @@
 @model AddResultViewModel
 
 @{
-    ViewData["Title"] = "Add Result";
+    ViewData["Title"] = "Submit Student Result";
 }
 
-<div asp-validation-summary="All" class="text-danger"></div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="dash-card p-4 p-md-5 shadow-sm">
+                <!-- Header -->
+                <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
+                    <div class="stat-icon success" style="width: 50px; height: 50px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-dark mb-0">Record Examination Result</h4>
+                        <p class="text-muted small mb-0">Input official student score for course evaluation</p>
+                    </div>
+                </div>
 
-<form asp-action="AddResult" asp-controller="Result" method="post">
+                <div asp-validation-summary="All" class="text-danger small mb-3"></div>
 
-    <label asp-for="Degree" class="form-label"></label>
-    <input asp-for="Degree" class="form-control" />
-    <span asp-validation-for="Degree" class="text-danger"></span>
-    <br />
+                <form asp-action="AddResult" asp-controller="Result" method="post">
+                    <div class="mb-3">
+                        <label asp-for="traineeId" class="form-label small fw-semibold text-secondary">Trainee ID</label>
+                        <input asp-for="traineeId" class="form-control" placeholder="Enter student / trainee ID" />
+                        <span asp-validation-for="traineeId" class="text-danger small"></span>
+                    </div>
 
-    <label asp-for="traineeId" class="form-label"></label>
-    <input asp-for="traineeId" class="form-control" />
-    <span asp-validation-for="traineeId" class="text-danger"></span>
-    <br />
+                    <div class="mb-3">
+                        <label asp-for="crsId" class="form-label small fw-semibold text-secondary">Course ID</label>
+                        <input asp-for="crsId" class="form-control" placeholder="Enter course ID" />
+                        <span asp-validation-for="crsId" class="text-danger small"></span>
+                    </div>
 
-    <label asp-for="crsId" class="form-label"></label>
-    <input asp-for="crsId" class="form-control" />
-    <span asp-validation-for="crsId" class="text-danger"></span>
-    <br />
+                    <div class="mb-4">
+                        <label asp-for="Degree" class="form-label small fw-semibold text-secondary">Achieved Degree / Score</label>
+                        <input asp-for="Degree" class="form-control" placeholder="e.g. 85" />
+                        <span asp-validation-for="Degree" class="text-danger small"></span>
+                    </div>
 
-    <input type="submit" class="btn btn-dark" value="Add" />
-</form>
+                    <div class="d-flex gap-2 justify-content-end pt-3 border-top">
+                        <a asp-action="DashBoard" asp-controller="Instructor" class="btn btn-outline-secondary px-4 rounded-pill">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success px-4 rounded-pill fw-semibold shadow-sm">
+                            Submit Result &rarr;
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
