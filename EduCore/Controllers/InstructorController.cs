@@ -84,8 +84,7 @@ namespace EduCore.Controllers
             string uid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var instructor = _instructorService.GetByUserId(uid);
             var trainees = _traineeService.GetByInstructorId(instructor.Id);
-            // Gemini: Create View to display trainees data (id , name , grade , department)
-            return View();
+            return View("GetTrainees", trainees);
         }
     }
 }

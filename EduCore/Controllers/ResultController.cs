@@ -28,13 +28,6 @@ namespace EduCore.Controllers
             var results = _courseTraineeResultsService.GetResultsByTid(Tid);
             return View("ShowResults", results);
         }
-        
-        public IActionResult ResultsForI(int Iid)
-        {
-            int Cid = _instructorService.GetById(Iid).crsId;
-            var results = _courseTraineeResultsService.GetResultsByCid(Cid);
-            return View("ShowResultsByCourse", results);
-        }
 
         public IActionResult ResultsForC(int Cid) {
             var results = _courseTraineeResultsService.GetResultsByCid(Cid);

@@ -20,16 +20,24 @@ namespace EduCore.Services
 
         public InstructorInfoViewModel GetInfo(ClaimsPrincipal User)
         {
-            return new InstructorInfoViewModel()
+            var userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            int? id = _instructorRepository.GetByUserId(userid)?.Id;
+            string? name = User.Identity.Name;
+            string? address = User.FindFirstValue("Address");
+            string? email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            Course? course = _instructorRepository.GetByUserId(userid)?.course;
+            string? dep = _instructorRepository.GetByUserId(userid)?.department?.Name;
+            var info = new InstructorInfoViewModel()
             {
-                id = _instructorRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.Id,
-                Userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-                Name = User.Identity.Name,
-                Address = User.FindFirstValue("Address"),
-                Email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-                Course = _instructorRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.course.Name,
-                Department = _instructorRepository.GetByUserId(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)?.department.Name
+                id = id,
+                Userid = userid,
+                Name = name,
+                Address = address,
+                Email = email,
+                Course = course,
+                Department = dep
             };
+            return info;
         }
 
         public List<Instructor>? GetAll()

@@ -31,7 +31,10 @@
 
         public Instructor? GetByUserId(string id)
         {
-            return _context.instructors.FirstOrDefault(i => i.UserId == id);
+            return _context.instructors
+                .Include(i => i.department)
+                .Include(i => i.course)
+                .FirstOrDefault(i => i.UserId == id);
         }
 
         public List<SearchDataViewModel> GetInstructorsByName(string name)

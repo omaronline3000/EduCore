@@ -74,6 +74,7 @@ namespace EduCore.Controllers
                         {
                             var trainee = _traineeService.GetById((int)userViewModel.id!);
                             trainee.UserId = appUser.Id;
+                            _traineeService.Save();
                         }
 
                     return RedirectToAction("Register");
