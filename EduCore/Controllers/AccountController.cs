@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using EduCore.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using EduCore.ViewModels;
-using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 namespace EduCore.Controllers
 {
     public class AccountController : Controller
@@ -43,6 +44,7 @@ namespace EduCore.Controllers
             return View("Register" , model);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterDataViewModel userViewModel)
         {
@@ -106,7 +108,7 @@ namespace EduCore.Controllers
             return View(userViewModel);
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
         {
@@ -114,8 +116,9 @@ namespace EduCore.Controllers
                 return RedirectToAction("DashBoard", User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value);
             return View("Login");
         }
-
+        [AllowAnonymous]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel userViewModel)
         {
             
@@ -143,20 +146,20 @@ namespace EduCore.Controllers
             return View("Login", userViewModel);
             
         }
-        // Test
-        public IActionResult TestAuth(LoginViewModel userViewModel)
-        {
-            string? id = User.Claims
-                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (id is null) return Content("Guest Account");
-            else return Content($"{id} Account");
-        }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View("AccessDenied",ReturnUrl);
         }
 
     }

@@ -19,27 +19,27 @@ namespace EduCore.Services
             else return null;
         }
 
-        public void AddDepartment(Department dep)
-        {
+        //public void AddDepartment(Department dep)
+        //{
 
-            _departmentRepository.Add(dep);
-            _departmentRepository.Save();
-        }
-        public Department? GetById(int id)
-        {
-            return _departmentRepository.GetById(id);
-        }
+        //    _departmentRepository.Add(dep);
+        //    _departmentRepository.Save();
+        //}
+        //public Department? GetById(int id)
+        //{
+        //    return _departmentRepository.GetById(id);
+        //}
 
-        public void Update(Department dep)
-        {
-            _departmentRepository.Update(dep);
-            _departmentRepository.Save();
-        }
-        public void Delete(int id)
-        {
-            _departmentRepository.Delete(id);
-            _departmentRepository.Save();
-        }
+        //public void Update(Department dep)
+        //{
+        //    _departmentRepository.Update(dep);
+        //    _departmentRepository.Save();
+        //}
+        //public void Delete(int id)
+        //{
+        //    _departmentRepository.Delete(id);
+        //    _departmentRepository.Save();
+        //}
 
         public bool Exist(int id)
         {
@@ -49,9 +49,9 @@ namespace EduCore.Services
         {
             return _departmentRepository.Exist();
         }
-        public void Save()
-        {
-            _departmentRepository.Save();
-        }
+        //public void Save()
+        //{
+        //    _departmentRepository.Save();
+        //}
     }
 }

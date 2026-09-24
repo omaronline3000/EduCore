@@ -13,11 +13,15 @@ namespace EduCore.Controllers
         {
             _roleManager = roleManager;
         }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             return View("Add");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add(AddRoleViewModel roleViewModel)
         {
             IdentityRole role = new();

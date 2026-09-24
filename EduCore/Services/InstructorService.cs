@@ -71,11 +71,11 @@ namespace EduCore.Services
         }
 
 
-        public void Update(Instructor ins)
-        {
-            _instructorRepository.Update(ins);
-            _instructorRepository.Save();
-        }
+        //public void Update(Instructor ins)
+        //{
+        //    _instructorRepository.Update(ins);
+        //    _instructorRepository.Save();
+        //}
         public void Delete(int id)
         {
             _instructorRepository.Delete(id);
@@ -85,10 +85,10 @@ namespace EduCore.Services
         {
            return  _instructorRepository.Exist(id);
         }
-        public bool Exist()
-        {
-            return _instructorRepository.Exist();
-        }
+        //public bool Exist()
+        //{
+        //    return _instructorRepository.Exist();
+        //}
         public List<SearchDataViewModel> SearchByName(string Name)
         {
             Name = Name.Replace(" ", "").ToLower();
@@ -96,9 +96,9 @@ namespace EduCore.Services
             return _instructorRepository.GetInstructorsByName(Name);
             
         }
-        public void Save()
-        {
-            _instructorRepository.Save();
-        }
+        //public void Save()
+        //{
+        //    _instructorRepository.Save();
+        //}
     }
 }

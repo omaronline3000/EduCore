@@ -68,7 +68,7 @@ namespace EduCore
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=LogIn}/{id?}")
+                pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

@@ -67,11 +67,11 @@ namespace EduCore.Services
             };
         }
 
-        public void UpdateTrainee(Trainee tar)
-        {
-            _traineeRepository.Update(tar);
-            _traineeRepository.Save();
-        }
+        //public void UpdateTrainee(Trainee tar)
+        //{
+        //    _traineeRepository.Update(tar);
+        //    _traineeRepository.Save();
+        //}
         public void DeleteTrainee(int id)
         {
             _traineeRepository.Delete(id);
@@ -84,10 +84,10 @@ namespace EduCore.Services
             return _traineeRepository.Exist(id);
         }
 
-        public bool Exist()
-        {
-            return _traineeRepository.Exist();
-        }
+        //public bool Exist()
+        //{
+        //    return _traineeRepository.Exist();
+        //}
         public void Save()
         {
             _traineeRepository.Save();

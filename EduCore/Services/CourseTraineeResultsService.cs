@@ -13,26 +13,26 @@ namespace EduCore.Services
             _courseRepository = courseRepository;
             _traineeRepository = traineeRepository;
         }
-        public List<CrsResult>? GetAll()
-        {
-            return _courseTraineeResultsRepository.GetAll();
-        }
-        public CrsResult? GetById(int id)
-        {
-            return _courseTraineeResultsRepository.GetById(id);
-        }
-        public TraineeCourseDegreeResultcsViewModel? GetResultByTidAndCid(int Tid, int Cid)
-        {
-            CrsResult? result = _courseTraineeResultsRepository.GetResultByTidAndCid(Tid, Cid);
-            return new TraineeCourseDegreeResultcsViewModel()
-            {
-                TName = result?.trainee.Name,
-                CName = result?.course.Name,
-                Degree = result?.Degree,
-                State = result?.Degree >= result?.course.minDegree ? "Successed" : "Failed",
-                Color = result?.Degree >= result?.course.minDegree ? "Green" : "Red"
-            };
-        }
+        //public List<CrsResult>? GetAll()
+        //{
+        //    return _courseTraineeResultsRepository.GetAll();
+        //}
+        //public CrsResult? GetById(int id)
+        //{
+        //    return _courseTraineeResultsRepository.GetById(id);
+        //}
+        //public TraineeCourseDegreeResultcsViewModel? GetResultByTidAndCid(int Tid, int Cid)
+        //{
+        //    CrsResult? result = _courseTraineeResultsRepository.GetResultByTidAndCid(Tid, Cid);
+        //    return new TraineeCourseDegreeResultcsViewModel()
+        //    {
+        //        TName = result?.trainee.Name,
+        //        CName = result?.course.Name,
+        //        Degree = result?.Degree,
+        //        State = result?.Degree >= result?.course.minDegree ? "Successed" : "Failed",
+        //        Color = result?.Degree >= result?.course.minDegree ? "Green" : "Red"
+        //    };
+        //}
         public DisplayTraineeCoursesDegreeViewModel? GetResultsByTid(int Tid)
         {
             string? Name = _traineeRepository.GetById(Tid)?.Name;
@@ -74,27 +74,27 @@ namespace EduCore.Services
             _courseTraineeResultsRepository.Save();
             return 1;
         }
-        public void UpdateResult(AddResultViewModel result , int id)
-        {
-            CrsResult crsResult = new()
-            {
-                Id = id,
-                Degree = result.Degree,
-                traineeId = result.traineeId,
-                crsId = result.crsId
-            };
-            _courseTraineeResultsRepository.UpdateResult(crsResult);
-            _courseTraineeResultsRepository.Save();
-        }
-        public void DeleteResult(int id)
-        {
+        //public void UpdateResult(AddResultViewModel result , int id)
+        //{
+        //    CrsResult crsResult = new()
+        //    {
+        //        Id = id,
+        //        Degree = result.Degree,
+        //        traineeId = result.traineeId,
+        //        crsId = result.crsId
+        //    };
+        //    _courseTraineeResultsRepository.UpdateResult(crsResult);
+        //    _courseTraineeResultsRepository.Save();
+        //}
+        //public void DeleteResult(int id)
+        //{
 
-            _courseTraineeResultsRepository.DeleteResult(id);
-            _courseTraineeResultsRepository.Save();
-        }
-        public void Save()
-        {
-            _courseTraineeResultsRepository.Save();
-        }
+        //    _courseTraineeResultsRepository.DeleteResult(id);
+        //    _courseTraineeResultsRepository.Save();
+        //}
+        //public void Save()
+        //{
+        //    _courseTraineeResultsRepository.Save();
+        //}
     }
 }

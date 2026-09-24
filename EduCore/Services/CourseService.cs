@@ -39,10 +39,10 @@ namespace EduCore.Services
             else return null;
         }
 
-        public Course? GetCourseById(int id)
-        {
-            return _courseRepository.GetById(id);
-        }
+        //public Course? GetCourseById(int id)
+        //{
+        //    return _courseRepository.GetById(id);
+        //}
 
 
         public List<Course>? GetByTraineeId(int id)
@@ -64,36 +64,36 @@ namespace EduCore.Services
             _courseRepository.Save();
         }
 
-        public void UpdateCourse(Course crs)
-        {
-            _courseRepository.Update(crs);
-            _courseRepository.Save();
-        }
+        //public void UpdateCourse(Course crs)
+        //{
+        //    _courseRepository.Update(crs);
+        //    _courseRepository.Save();
+        //}
         public void DeleteCourse(int id)
         {
                 _courseRepository.Delete(id);
                 _courseRepository.Save();
         }
 
-        public bool Exist(int id)
-        {
-            return _courseRepository.Exist(id);
-        }
+        //public bool Exist(int id)
+        //{
+        //    return _courseRepository.Exist(id);
+        //}
         public bool Exist()
         {
             return _courseRepository.Exist();
         }
 
-        public DisplayCourseWithItsTraineeResults? CourseTraineesDegreesById(int crsId)
-        {
+        //public DisplayCourseWithItsTraineeResults? CourseTraineesDegreesById(int crsId)
+        //{
             
-            var course = _courseRepository.GetById(crsId);
+        //    var course = _courseRepository.GetById(crsId);
             
-            if (course is null) 
-                return null;
-            return _courseRepository.GetCourseWithTraineeResults(course);
+        //    if (course is null) 
+        //        return null;
+        //    return _courseRepository.GetCourseWithTraineeResults(course);
          
-        }
+        //}
 
         public List<CoursesDataByDepartmetnDTO>? CoursesByDeptId(int deptId)
         {

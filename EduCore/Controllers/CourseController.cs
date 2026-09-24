@@ -3,7 +3,6 @@ using EduCore.Repository;
 
 namespace EduCore.Controllers
 {
-    [Authorize]
     public class CourseController : Controller
     {
         private readonly CourseService _courseService;
@@ -19,6 +18,7 @@ namespace EduCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index(int num=0)
         {
             var Courses = _courseService.Pagination(num);
@@ -26,6 +26,7 @@ namespace EduCore.Controllers
             return View("ShowAllCourses", Courses);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             AddCoursesViewModel CourseViewModel = new AddCoursesViewModel()
@@ -35,7 +36,9 @@ namespace EduCore.Controllers
 
             return View("Add", CourseViewModel);
         }
+        [ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult SaveAdd(AddCoursesViewModel CourseFromReq)
         {
             if (CourseFromReq.DeptId == -1)
@@ -53,22 +56,22 @@ namespace EduCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _courseService.DeleteCourse(id);
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult GetCoursesByDept(int deptId)
         {
             var result = _courseService.CoursesByDeptId(deptId);
             return Json(result);
         }
 
-        
 
-
-
+        [Authorize]
         // Remote Validation
         public IActionResult ValidateDegree(int minDegree, int Degree)
         {

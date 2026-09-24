@@ -48,7 +48,9 @@ namespace EduCore.Repository
 
         public Course? GetById(int id)
         {
-            return _context.courses.Find(id);
+            return _context.courses
+                .Include(c => c.instructors)
+                .FirstOrDefault(c => c.Id == id);
         }
 
         public void Update(Course crs)
@@ -70,23 +72,23 @@ namespace EduCore.Repository
             return _context.courses.Any();
         }
 
-        public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course)
-        {
-            var CourseResults = new DisplayCourseWithItsTraineeResults()
-            {
-                CourseTitle = course.Name,
-                TraineeData = _context.crsResults
-                    .Where(crs => crs.crsId == course.Id)
-                    .Select(crs => new TraineeDataToDisplayInCourseResultViewModel()
-                    {
-                        Name = crs.trainee.Name,
-                        Degree = crs.Degree,
-                        Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red",
-                        State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
-                    }).ToList()
-            };
-            return CourseResults;
-        }
+        //public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course)
+        //{
+        //    var CourseResults = new DisplayCourseWithItsTraineeResults()
+        //    {
+        //        CourseTitle = course.Name,
+        //        TraineeData = _context.crsResults
+        //            .Where(crs => crs.crsId == course.Id)
+        //            .Select(crs => new TraineeDataToDisplayInCourseResultViewModel()
+        //            {
+        //                Name = crs.trainee.Name,
+        //                Degree = crs.Degree,
+        //                Color = crs.Degree >= crs.course.minDegree ? "Green" : "Red",
+        //                State = crs.Degree >= crs.course.minDegree ? "Successed" : "Failed"
+        //            }).ToList()
+        //    };
+        //    return CourseResults;
+        //}
 
 
         public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId)

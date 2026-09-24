@@ -17,19 +17,22 @@ namespace EduCore.Controllers
             _departmentService = departmentService;
             _traineeService = traineeService;
         }
-
+        [Authorize(Roles = "Instructor")]
+        [HttpGet]
         public IActionResult DashBoard()
         {
             InstructorInfoViewModel model = _instructorService.GetInfo(User);
             return View("InstructorDashboard",model);
         }
-
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult Index()
         {
             var instructors = _instructorService.GetAll();
             return View("ShowAll", instructors);
         }
-        
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var instructor = _instructorService.GetById(id);
@@ -37,6 +40,7 @@ namespace EduCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             AddingInstructorViewModel viewModel = new AddingInstructorViewModel();
@@ -46,6 +50,8 @@ namespace EduCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult SaveAdd(AddingInstructorViewModel instructorFromRequest)
         {
             if (!ModelState.IsValid)
@@ -58,14 +64,15 @@ namespace EduCore.Controllers
             _instructorService.AddInstructor(instructorFromRequest);
             return RedirectToAction("Index");
         }
-        
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _instructorService.Delete(id);
             return RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         // TODO: edit to make it search by id not name
         public IActionResult Search(string search)
@@ -78,8 +85,9 @@ namespace EduCore.Controllers
             else
                 return View("SearchResult", result);
         }
-
-       public IActionResult GetTrainees()
+        [HttpGet]
+        [Authorize(Roles = "Instructor")]
+        public IActionResult GetTrainees()
         {
             string uid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var instructor = _instructorService.GetByUserId(uid);

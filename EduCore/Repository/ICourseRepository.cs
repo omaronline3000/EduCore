@@ -19,7 +19,7 @@ namespace EduCore.Repository
         // Main Features
         public bool Exist(int id);
         public bool Exist();
-        public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course);
+      //  public DisplayCourseWithItsTraineeResults GetCourseWithTraineeResults(Course course);
         public List<CoursesDataByDepartmetnDTO> GetCoursesByDeptId(int deptId);
     }
 }

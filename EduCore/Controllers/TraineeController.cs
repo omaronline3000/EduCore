@@ -1,5 +1,4 @@
-﻿
-using EduCore.Repository;
+﻿using EduCore.Repository;
 using System.Security.Claims;
 
 namespace EduCore.Controllers
@@ -10,23 +9,27 @@ namespace EduCore.Controllers
         private readonly CourseTraineeResultsService _courseTraineeResultsService;
         private readonly DepartmentService _departmentService;
         private readonly CourseService _courseService;
-        public TraineeController(TraineeService traineeService , 
+        public TraineeController(
+            TraineeService traineeService , 
             CourseTraineeResultsService courseTraineeResultsService,
             DepartmentService departmentService,
-            CourseService courseService)
+            CourseService courseService
+            )
         {
             _trineeService = traineeService;
             _courseTraineeResultsService = courseTraineeResultsService;
             _departmentService = departmentService;
             _courseService = courseService;
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Trainee")]
         public IActionResult DashBoard()
         {
             TraineeInfoViewModel model = _trineeService.GetInfo(User);
             return View("TraineeDashboard",model);
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Trainee")]
         public IActionResult GetCourses()
         {
             var UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -34,7 +37,8 @@ namespace EduCore.Controllers
             var courses = _courseService.GetByTraineeId(trainee.Id);
             return View("GetCourses", courses);
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var trainees = _trineeService.GetAll();
@@ -47,6 +51,7 @@ namespace EduCore.Controllers
         //}
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             AddingTraineeViewModel viewModel = new AddingTraineeViewModel()
@@ -56,6 +61,8 @@ namespace EduCore.Controllers
             return View("Add",viewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add(AddingTraineeViewModel traineeViewModel)
         {
             if (traineeViewModel.depId == -1)
@@ -67,6 +74,8 @@ namespace EduCore.Controllers
             }
             return View("Add",traineeViewModel);
         }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _trineeService.DeleteTrainee(id);

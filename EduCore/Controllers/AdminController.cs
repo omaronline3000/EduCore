@@ -2,6 +2,7 @@
 
 namespace EduCore.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly CourseService _courseService;
@@ -13,13 +14,14 @@ namespace EduCore.Controllers
             _adminService = adminService;
             _instructorService = instructorService;
         }
+        [HttpGet]
         public IActionResult DashBoard()
         {
             AdminInfoViewModel model = _adminService.GetInfo(User);
             return View("AdminDashboard", model);
         }
 
-
+        
         [HttpGet]
         public IActionResult AssignInstructor()
         {
@@ -28,6 +30,7 @@ namespace EduCore.Controllers
             return View("AssignInstructor");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AssignInstructor(AssignInstructorViewModel dataFromReq)
         {
             if (ModelState.IsValid)
@@ -36,6 +39,8 @@ namespace EduCore.Controllers
                 if (!state) ModelState.AddModelError("", "Instructor or Course is not exist");
                 else RedirectToAction("AssignInstructor");
             }
+            ViewBag.courses = _courseService.GetAll();
+            ViewBag.instructors = _instructorService.GetAll();
             return View("AssignInstructor",dataFromReq);
         }
 

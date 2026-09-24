@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <form method="post" action="/Instructor/SaveAdd">
+                <form method="post" asp-controller="Instructor" asp-action="SaveAdd">
                     <div class="mb-3">
                         <label for="name" class="form-label small fw-semibold text-secondary">Full Name</label>
                         <input name="name" id="name" type="text" class="form-control" value="@Model.Name" placeholder="Dr. Jane Doe" required />

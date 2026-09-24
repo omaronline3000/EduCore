@@ -1,0 +1,97 @@
+@model string
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="dash-card p-4 p-md-5 text-center shadow-sm">
+                <!-- Icon -->
+                <div class="stat-icon danger mx-auto mb-4" style="width: 72px; height: 72px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+
+                <!-- Badges & Titles -->
+                <span class="badge-soft badge-soft-danger px-3 py-1 mb-3 fw-semibold">Error 403 &bull; Unauthorized</span>
+                <h2 class="fw-bold text-dark mb-2">Access Denied</h2>
+                <p class="text-muted small mb-4">
+                    You do not have the required permissions or role privileges to view or perform operations on this Path @Model
+                </p>
+
+                <!-- User Context Notice -->
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="p-3 bg-light rounded-3 mb-4 text-start small border">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Signed In User:</span>
+                            <span class="fw-bold text-dark">@User.Identity.Name</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Current Role:</span>
+                            <span>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <span class="badge-soft badge-soft-primary small py-0 px-2">Administrator</span>
+                                }
+                                else if (User.IsInRole("Instructor"))
+                                {
+                                    <span class="badge-soft badge-soft-success small py-0 px-2">Instructor</span>
+                                }
+                                else if (User.IsInRole("Trainee"))
+                                {
+                                    <span class="badge-soft badge-soft-info small py-0 px-2">Trainee</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-soft badge-soft-secondary small py-0 px-2">Standard User</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                }
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 pt-2">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin" asp-action="DashBoard" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">
+                                Go to My Dashboard &rarr;
+                            </a>
+                        }
+                        else if (User.IsInRole("Instructor"))
+                        {
+                            <a asp-controller="Instructor" asp-action="DashBoard" class="btn btn-success rounded-pill px-4 fw-semibold shadow-sm">
+                                Go to My Dashboard &rarr;
+                            </a>
+                        }
+                        else if (User.IsInRole("Trainee"))
+                        {
+                            <a asp-controller="Trainee" asp-action="DashBoard" class="btn btn-info text-white rounded-pill px-4 fw-semibold shadow-sm">
+                                Go to My Dashboard &rarr;
+                            </a>
+                        }
+
+                        <a asp-controller="Account" asp-action="LogOut" class="btn btn-outline-danger rounded-pill px-4 fw-semibold">
+                            Switch Account
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">
+                            Sign In with Different Account
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                            Back to Home
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

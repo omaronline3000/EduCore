@@ -13,32 +13,38 @@ namespace EduCore.Controllers
             _courseTraineeResultsService = courseTraineeResultsService;
             _instructorService = instructorService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult ShowResult(int Tid, int CrsId)
-        {
-            var result = _courseTraineeResultsService.GetResultByTidAndCid(Tid, CrsId);
-            return View("ShowTraineeResults", result);
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+        //public IActionResult ShowResult(int Tid, int CrsId)
+        //{
+        //    var result = _courseTraineeResultsService.GetResultByTidAndCid(Tid, CrsId);
+        //    return View("ShowTraineeResults", result);
+        //}
 
+        [HttpGet]
+        [Authorize(Roles = "Trainee,Admin")]
         public IActionResult ResultsForT(int Tid)
         {
             var results = _courseTraineeResultsService.GetResultsByTid(Tid);
             return View("ShowResults", results);
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Instructor")]
         public IActionResult ResultsForC(int Cid) {
             var results = _courseTraineeResultsService.GetResultsByCid(Cid);
             return View("ShowResultsByCourse", results);
         }
         [HttpGet]
+        [Authorize(Roles = "Instructor")]
         public IActionResult AddResult()
         {
             return View("AddResult");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Instructor")]
         public IActionResult AddResult(AddResultViewModel data)
         {
             if (ModelState.IsValid)
@@ -51,10 +57,10 @@ namespace EduCore.Controllers
             return View("AddResult", data);
         }
 
-        public IActionResult Delete(int id)
-        {
-            _courseTraineeResultsService.DeleteResult(id);
-            return RedirectToAction("Index");
-        }
+        //public IActionResult Delete(int id)
+        //{
+        //    _courseTraineeResultsService.DeleteResult(id);
+        //    return RedirectToAction("Index");
+        //}
     }
 }
