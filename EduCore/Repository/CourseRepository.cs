@@ -36,6 +36,7 @@ namespace EduCore.Repository
         {
             return _context.courses
                 .Include(c => c.instructors)
+                .Include(c => c.department)
                 .Skip(pageSize * pageNumber)
                 .Take(pageSize)
                 .ToList();
