@@ -1,0 +1,36 @@
+@model List<Course>?
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Courses</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Degree</th>
+            <th scope="col">minDegree</th>
+            <th scope="col">Hourse</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Degree</td>
+                <td>@item.minDegree</td>
+                <td>@item.Hourse</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<div>
+    <a class="btn btn-secondary" asp-controller="Trainee" asp-action="DashBoard">Back To DashBoard</a>
+</div>
+

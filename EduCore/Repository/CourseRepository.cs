@@ -22,6 +22,16 @@ namespace EduCore.Repository
             return _context.courses.ToList();
         }
 
+
+        public List<Course>? GetByTid(int id)
+        {
+            return _context.crsResults
+                .Where(cr => cr.traineeId == id)
+                .Select(cr => cr.course)
+                .ToList();
+        }
+
+
         public List<Course> GetPage(int pageNumber, int pageSize)
         {
             return _context.courses

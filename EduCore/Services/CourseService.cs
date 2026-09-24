@@ -45,6 +45,11 @@ namespace EduCore.Services
         }
 
 
+        public List<Course>? GetByTraineeId(int id)
+        {
+            return _courseRepository.GetByTid(id);
+        }
+
         public void AddCourse(AddCoursesViewModel CourseFromReq)
         {
             var course = new Course()

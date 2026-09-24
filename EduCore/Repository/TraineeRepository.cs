@@ -36,7 +36,9 @@
 
         public Trainee? GetByUserId(string id)
         {
-            return _context.trainees.FirstOrDefault(t => t.UserId == id);
+            return _context.trainees
+                .Include(t => t.department)
+                .FirstOrDefault(t => t.UserId == id);
         }
 
         public void Update(Trainee tar)

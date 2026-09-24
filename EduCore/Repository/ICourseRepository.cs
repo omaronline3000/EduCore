@@ -10,7 +10,7 @@ namespace EduCore.Repository
         public List<Course> GetAll();
         public List<Course> GetPage(int pageNumber , int pageSize);
         public Course GetById(int id);
-        //public Course? GetCourseByInstructorId(int id);
+        public List<Course>? GetByTid(int Tid);
 
         public void Update(Course crs);
         public void Delete(int id);

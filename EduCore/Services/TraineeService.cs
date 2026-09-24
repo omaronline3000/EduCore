@@ -47,6 +47,11 @@ namespace EduCore.Services
             var course = _instructorService.GetById(id)?.course;
             return _traineeRepository.GetByCourseId(course.Id);
         }
+        
+        public Trainee? GetByUserId(string id)
+        {
+            return _traineeRepository.GetByUserId(id);
+        }
 
         public TraineeInfoViewModel GetInfo(ClaimsPrincipal User)
         {

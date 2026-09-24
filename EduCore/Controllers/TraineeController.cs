@@ -1,5 +1,6 @@
 ﻿
 using EduCore.Repository;
+using System.Security.Claims;
 
 namespace EduCore.Controllers
 { 
@@ -8,13 +9,16 @@ namespace EduCore.Controllers
         private readonly TraineeService _trineeService;
         private readonly CourseTraineeResultsService _courseTraineeResultsService;
         private readonly DepartmentService _departmentService;
+        private readonly CourseService _courseService;
         public TraineeController(TraineeService traineeService , 
             CourseTraineeResultsService courseTraineeResultsService,
-            DepartmentService departmentService)
+            DepartmentService departmentService,
+            CourseService courseService)
         {
             _trineeService = traineeService;
             _courseTraineeResultsService = courseTraineeResultsService;
             _departmentService = departmentService;
+            _courseService = courseService;
         }
 
         public IActionResult DashBoard()
@@ -23,6 +27,13 @@ namespace EduCore.Controllers
             return View("TraineeDashboard",model);
         }
 
+        public IActionResult GetCourses()
+        {
+            var UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var trainee = _trineeService.GetByUserId(UserId);
+            var courses = _courseService.GetByTraineeId(trainee.Id);
+            return View("GetCourses", courses);
+        }
 
         public IActionResult Index()
         {
